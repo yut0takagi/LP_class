@@ -1,0 +1,11 @@
+  require valid-user
+  AuthUserfile "/var/www/var/.htpasswd"
+  AuthGroupfile /dev/null
+  AuthName "realm"
+-  AuthType Basic
++  AuthType form
++ AuthFormProvider file
++ AuthFormLoginRequiredLocation /dashboard.html
++ Session On
++ SessionCookieName session path=/
++ SessionCryptoPassphrase hogehogefugafuga

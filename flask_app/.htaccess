@@ -1,0 +1,37 @@
+#ログイン時の処理
+<Files "dologin.html"> #ログインフォームのアクション先として指定したファイル名
+	SetHandler form-login-handler
+	AuthFormLoginRequiredLocation /auth-login.html #ログインフォームのページ
+	AuthFormLoginSuccessLocation /auth/index.html #ログイン後のページ
+	AuthFormProvider file
+	AuthUserFile "/var/www/var/.htpasswd" #ベーシック認証の.htpasswdファイル
+	AuthType form
+	AuthName "realm"
+	Session On
+	SessionMaxAge 0 #セッションの有効期限。0で無期限。秒単位で定義。
+	SessionCookieName session path=/
+	SessionCryptoPassphrase hogehogefugafuga
+</Files>
+
+#ログアウト時の処理
+<Files "dologout.html"> #ログアウトのリンク先として指定したファイル名
+	SetHandler form-logout-handler
+	AuthFormLogoutLocation "/logout.html" #ログアウト後のページ
+	Session On
+	SessionMaxAge 1 #1秒に設定することでセッションを強制的に切る。（0だと無期限になってしまうため）
+	SessionCookieName session path=/
+	SessionCryptoPassphrase hogehogefugafuga
+</Files>
+
+#ログアウト後に表示するページ用の処理（ログインしていないと表示できないように）
+<Files "logout.html">
+	require valid-user
+	AuthFormProvider file
+	AuthUserFile "/var/www/var/.htpasswd"
+	AuthType form
+	AuthName "realm"
+	AuthFormLoginRequiredLocation /auth-login.html #ログインしていない場合に表示するページ
+	Session On
+	SessionCookieName session path=/
+	SessionCryptoPassphrase hogehogefugafuga
+</Files>
