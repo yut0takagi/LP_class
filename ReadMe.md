@@ -36,12 +36,11 @@
 現行のビジネスプロセスについて以下に示す。
 <!---後に記述します。-->
 
+## 2. 画面遷移図
+画面遷移図を以下に示す。
 
 ![画面遷移図](https://github.com/yut0takagi/LP_class/blob/main/fig/%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3.png?raw=true "Giithub")
 
-
-# 問題要件定義について
-本モデル
 
 
 
