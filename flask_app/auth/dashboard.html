@@ -4,8 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DashBoard</title>
+    <style>
+        .header{
+            position:fixed;
+            top:0%;
+            width:100%;
+            height: 10%;
+            left:0;
+            right:0;
+            background-color: #f9f9f9;
+        }
+        .header h1{
+            text-align: center;
+            color: black;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .header p{
+            text-align: center;
+            color: #5d627b;
+            margin-bottom: 10px;
+        }
+        .left-box{
+            position:fixed;
+            top:10%;
+            left:0%;
+            bottom:0%;
+            width: 15%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .center-box{
+            position:fixed;
+            top: 10%;
+            left: 15%;
+            right: 15%;
+            bottom: 0%;
+            background-color: #d8d824;
+        }
+        .right-box{
+            position:fixed;
+            top:20%;
+            right: 0%;
+            bottom:0%;
+            width: 15%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
-    <h1>DashBoard</h1>
+    <div class = "header">
+        <h1>業務効率化ツール</h1>
+    </div>
+    <hr>
+    <div class="left-box">
+        <button type="button">アカウント登録</button>
+        <br>
+        <a href="make_account.html">アカウント登録</a><br>
+        <a href="logout.html">ログアウト</a>
+    </div>
+    <div class="center-box">
+        <p>本サイトは個別指導塾での業務効率化を目的とした管理ツールです。</p>
+    </div>
+    <div class="right-box">
+        <button type="button">アカウント登録</button>
+    </div>
 </body>
 </html>
