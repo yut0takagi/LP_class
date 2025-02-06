@@ -1,76 +1,260 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DashBoard</title>
-    <style>
-        .header{
-            position:fixed;
-            top:0%;
-            width:100%;
-            height: 10%;
-            left:0;
-            right:0;
-            background-color: #f9f9f9;
-        }
-        .header h1{
-            text-align: center;
-            color: black;
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-        .header p{
-            text-align: center;
-            color: #5d627b;
-            margin-bottom: 10px;
-        }
-        .left-box{
-            position:fixed;
-            top:10%;
-            left:0%;
-            bottom:0%;
-            width: 15%;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
-        .center-box{
-            position:fixed;
-            top: 10%;
-            left: 15%;
-            right: 15%;
-            bottom: 0%;
-            background-color: #d8d824;
-        }
-        .right-box{
-            position:fixed;
-            top:20%;
-            right: 0%;
-            bottom:0%;
-            width: 15%;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Dashboard (Main Scroll Only)</title>
+  <style>
+    /* 画面全体のベース設定 */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      /* Body自体のスクロールをさせたくない場合はhiddenにする */
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    /* ヘッダー（上部固定） */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;        /* ヘッダーの高さ */
+      background-color: #3f6db3;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 1.8em;
+    }
+
+    /* ヘッダーの下に配置するコンテンツ領域を画面全体に広げる */
+    .container {
+      position: absolute;
+      top: 60px;  /* ヘッダー分だけ下げる */
+      left: 0;
+      right: 0;
+      bottom: 0; /* 下端まで */
+      display: flex;
+      background-color: #f0f4fa;
+    }
+
+    /* サイドバー */
+    .sidebar {
+      width: 200px;
+      background-color: #d0ddf0;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar li {
+      margin: 10px 0;
+    }
+    .sidebar a {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .sidebar a:hover {
+      text-decoration: underline;
+    }
+
+    /* メイン部分（ここだけスクロール） */
+    .main {
+      flex: 1;
+      overflow-y: auto; /* スクロールはメインだけ */
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 上部2カラム領域（本日の予定・今後の予定） */
+    .top-content {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      flex-wrap: wrap; /* 狭い場合折り返し */
+    }
+
+    .today, .upcoming {
+      background-color: #e0e0e0;
+      padding: 15px;
+      border-radius: 5px;
+      flex: 1;
+      min-width: 280px;
+    }
+    .today h2, .upcoming h2 {
+      margin-top: 0;
+      font-size: 1.2em;
+    }
+
+    /* 今日の予定テーブル */
+    table.schedule {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table.schedule th, table.schedule td {
+      border: 1px solid #ccc;
+      text-align: center;
+      padding: 8px;
+    }
+    table.schedule th {
+      background-color: #f5f5f5;
+    }
+
+    /* 今後の予定 */
+    .big-date {
+      font-size: 3em;
+      color: #333;
+      margin: 0; /* 余白を調整 */
+      text-align: center;
+    }
+
+    /* 代行検索 */
+    .search-area {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    .search-area h3 {
+      margin-top: 0;
+    }
+    .search-area label {
+      font-weight: bold;
+      margin-right: 5px;
+    }
+    .search-area select {
+      margin-right: 10px;
+    }
+    .search-area .result-box {
+      margin-top: 20px;
+      min-height: 100px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+    }
+
+    /* ログアウトリンク */
+    .logout-link {
+      margin-top: auto;
+      text-align: right;
+    }
+    .logout-link a {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .logout-link a:hover {
+      text-decoration: underline;
+    }
+
+  </style>
 </head>
 <body>
-    <div class = "header">
-        <h1>業務効率化ツール</h1>
+
+  <!-- 固定ヘッダー -->
+  <div class="header">
+    <h1>Dashboard</h1>
+  </div>
+
+  <!-- ヘッダーの下に表示されるメイン領域 (サイドバー + コンテンツ) -->
+  <div class="container">
+    <!-- サイドバー -->
+    <div class="sidebar">
+      <ul>
+        <li><a href="#">個人情報の編集</a></li>
+        <li><a href="#">シフトの提出</a></li>
+        <li><a href="#">シフトの確認</a></li>
+        <li><a href="#">生徒管理</a></li>
+        <li><a href="#">AIエージェント</a></li>
+        <li><a href="#">LINE連携</a></li>
+        <li><a href="#">教室管理</a></li>
+      </ul>
     </div>
-    <hr>
-    <div class="left-box">
-        <button type="button">アカウント登録</button>
-        <br>
-        <a href="make_account.html">アカウント登録</a><br>
-        <a href="logout.html">ログアウト</a>
+
+    <!-- メイン部分（ここがスクロール対象） -->
+    <div class="main">
+      <div class="top-content">
+        <!-- 本日の予定 -->
+        <div class="today">
+          <h2>本日の予定</h2>
+          <table class="schedule">
+            <tr>
+              <th>時間</th><th>AB</th><th>CD</th><th>EF</th><th>GH</th><th>IJ</th>
+            </tr>
+            <tr><td>10:50-</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>12:50-</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>14:20-</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>15:50-</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>17:20-</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>18:50-</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>20:20-</td><td></td><td></td><td></td><td></td><td></td></tr>
+          </table>
+        </div>
+        <!-- 今後の予定 -->
+        <div class="upcoming">
+          <h2>今後の予定</h2>
+          <div class="big-date">
+            <p>3月12日</p>
+            <p>14:20-15:40</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 代行検索 -->
+      <div class="search-area">
+        <h3>代行検索</h3>
+        <div>
+          <label>学年と科目:</label>
+          <select name="subject">
+            <option value="">--- 選択 ---</option>
+            <option value="小学生・算数">小学生・算数</option>
+            <option value="中学生・数学">中学生・数学</option>
+            <option value="高校生・数学I">高校生・数学I</option>
+          </select>
+
+          <label>検索対象期間:</label>
+          <select name="start-date">
+            <option value="">開始</option>
+            <option value="2月12日">2月12日</option>
+            <option value="2月13日">2月13日</option>
+            <option value="2月14日">2月14日</option>
+          </select>
+          ～
+          <select name="end-date">
+            <option value="">終了</option>
+            <option value="2月16日">2月16日</option>
+            <option value="2月17日">2月17日</option>
+            <option value="2月18日">2月18日</option>
+          </select>
+        </div>
+        <div class="result-box">
+          <!-- 検索結果などを表示する領域 -->
+        </div>
+      </div>
+
+      <!-- 下部にログアウトリンク -->
+      <div class="logout-link">
+        <a href="#">ログアウト</a>
+      </div>
     </div>
-    <div class="center-box">
-        <p>本サイトは個別指導塾での業務効率化を目的とした管理ツールです。</p>
-    </div>
-    <div class="right-box">
-        <button type="button">アカウント登録</button>
-    </div>
+  </div>
+
+  <!-- 必要に応じてJavaScriptを追加 -->
+  <script>
+    // 必要に応じてドロップダウン選択や検索処理などを記述
+  </script>
 </body>
 </html>
