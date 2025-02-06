@@ -4,7 +4,7 @@
 # 開発環境について
 本システムの開発に使用しているローカル環境は以下の通りです。   
 
-> PC: Apple MacBook Air M1 2020モデル   
+> PC: `Apple MacBook Air M1 2020モデル`   
 >利用ツール: `Visual Studio Code`, `Google Spread Sheet`, `Google Colaboratory`, `Line`   
 >開発言語: `Python`   
 
