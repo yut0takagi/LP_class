@@ -7,9 +7,19 @@
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
     <title>{{ title }}</title>
+    <style>
+        body{
+            padding-top: 70px;
+        }
+        {% if title == "ダッシュボード" %}
+            body {
+                background-color: #C4D9FF;
+            }
+        {% endif %}
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #C5BAFF;">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">個別指導塾の業務効率化ツール</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,8 +52,11 @@
             </div>
         </div>
     </nav>
-    {% block content %}
-    <!--ここにコンテンツを記述-->
-    {% endblock %}
+    <main>
+        <h1 class="visually-hidden">{{ title }}</h1>
+        {% block content %}
+        <!--ここにコンテンツを記述-->
+        {% endblock %}
+    </main>
 </body>
 </html>
