@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<script defer src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- 左側の固定タブバー -->
+        <div class="col-2 position-fixed" style="background-color: rgb(187, 160, 212); height: 100vh;">
+            <nav class="nav flex-column mt-3">
+                <a class="nav-link active" aria-current="page" href="#">Active</a>
+                <a class="nav-link" href="#">Link 1</a>
+                <a class="nav-link" href="#">Link 2</a>
+                <a class="nav-link disabled" tabindex="-1" aria-disabled="true">Disabled</a>
+            </nav>
+        </div>
+
+        <!-- 右側のコンテンツ（タブバーの幅分オフセット） -->
+        <div class="col offset-2" style="background-color: rgb(98, 11, 180); min-height: 100vh;">
+            <h1 class="text-white mt-3">メインコンテンツ</h1>
+            <p class="text-white">ここにページの内容を記述します。タブバーは左側に固定されます。</p>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

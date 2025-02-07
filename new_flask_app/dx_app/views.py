@@ -22,6 +22,15 @@ def homepage():
 def login():
     return render_template("dx_app/login.html",title="ログイン")
 
-@app.route("/make-account")
+@app.route("/make-account", methods=["POST","GET"])
 def make_account():
     return render_template("dx_app/make_account.html",title="アカウントの新規作成")
+
+@app.route("/dashboard")
+def dashboard():
+    return render_template("dx_app/dashboard.html",title="ダッシュボード")
+
+
+
+
+
