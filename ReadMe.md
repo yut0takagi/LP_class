@@ -7,7 +7,7 @@
 > PC: `Apple MacBook Air M1 2020モデル`   
 >利用ツール: `Visual Studio Code`, `Google Spread Sheet`, `Google Colaboratory`, `Line`   
 >開発言語: `Python`   
->利用しているライブラリ: `Pulp`, `Pandas`, `Openpyxl`
+>利用しているライブラリ: `Pulp`, `Pandas`, `Matplotlib`,`Numpy`,`Openpyxl`
 
 # 1. 問題要件定義
 ## 1.1 システム化の目的
@@ -80,9 +80,7 @@
 
             $$ \sum_{i=1}^{I}Var(i) = \sum_{i=1}^{I}( \frac{1}{n}\sum_{k=1}^{n}(day_k - \frac{1}{n}\sum_{s=1}^{n}day_s)^2)$$ 
           
-
-
-    * 授業
+    
 
 
 
