@@ -80,6 +80,7 @@
 
             $$ \sum_{i=1}^{I}Var(i) = \sum_{i=1}^{I}( \frac{1}{n}\sum_{k=1}^{n}(day_k - \frac{1}{n}\sum_{s=1}^{n}day_s)^2)$$ 
           
+          
 
     * 授業
 
