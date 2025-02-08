@@ -5,23 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
-    <title>{{ title }}</title>
-    <style>
-        body{
-            padding-top: 70px;
-        }
-        {% if title == "ダッシュボード" %}
-            body {
-                background-color: #C4D9FF;
-            }
-        {% endif %}
-    </style>
+    <script defer src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <title>{{ data["title"] }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_all.css') }}"/>
+    {% if data["login"] == True %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+    {% endif %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #C5BAFF;">
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #C5BAFF;" aria-label="トップナビゲーション">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">個別指導塾の業務効率化ツール</a>
+            <a class="navbar-brand" href="/">個別指導塾の業務効率化ツール</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -53,9 +47,37 @@
         </div>
     </nav>
     <main>
-        <h1 class="visually-hidden">{{ title }}</h1>
         {% block content %}
-        <!--ここにコンテンツを記述-->
+            {% if data["login"] == True %}
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- 左側の固定タブバー -->
+                        <div class="col-2 position-fixed d-flex flex-column justify-content-between" style="background-color: #E8F9FF; height: 100vh; padding: 1rem;">
+                            <nav class="nav flex-column" aria-label="サイドメニュー">
+                                <a class="nav-link mb-2" aria-current="page" href="/dashboard">ダッシュボード</a>
+                                <a class="nav-link mb-2 active" href="/edit-profile">個人情報の編集</a>
+                                <a class="nav-link mb-2" href="/work-schedule-submit">シフトの提出</a>
+                                <a class="nav-link mb-2" href="/work-schedule-check">シフトの確認</a>
+                                <a class="nav-link mb-2" href="/manage-students">生徒管理</a>
+                                <a class="nav-link mb-2" href="/ai-agent">AIエージェント</a>
+                                <a class="nav-link mb-2" href="/line-connect">LINE連携について</a>
+                                <a class="nav-link mb-2" href="/manage-class">教室管理</a>
+                            </nav>
+                            <!-- ログアウトボタン -->
+                            <div class="mt-auto">
+                                <a class="nav-link text-danger" href="#">ログアウト</a>
+                            </div>
+                        </div>
+                        <!-- メインコンテンツ -->
+                        <div class="col offset-2" style="background-color: #C4D9FF; min-height: 100vh;">
+                            <!--ここにログイン後のコンテンツを記述-->
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <h1 class="visually-hidden">{{ data["title"] }}</h1>
+                <!--ここに未ログイン時のコンテンツを記述-->
+            {% endif %}
         {% endblock %}
     </main>
 </body>
