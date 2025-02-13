@@ -48,8 +48,6 @@ def make_account():
 def dashboard():
     return render_template("dx_app/dashboard.html",data=make_dict("dashboard"))
 
-
-
 @app.route("/edit-profile")
 def edit_profile():
     return render_template("dx_app/edit-profile.html",data=make_dict("edit-profile"))
