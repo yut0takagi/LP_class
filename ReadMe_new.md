@@ -41,7 +41,21 @@
         しかし、先に述べたとおり他の教務スタッフがいつ出勤するのか把握することが困難でした。
         よって、本シートを全教務スタッフの勤務可能調査表と連携することで「誰がいつ出勤できるか」,「この日にこの科目を教えられる人は誰がいるのか」などを表形式で確認できるようにしました。
         さらに、教室でのPCによる代行者検索が頻繁に起きていたため、講師名や出勤可能日,科目等を選択式にして素早く操作できUXの向上を行いました。
-
+        そして、前日や次の日をボタンで操作できる用意するために以下のコードをGoogleAppScriptで実行するようにしました。
+        ```GAS
+        function addOneDay() {
+            var sheet = SpreadsheetApp.getActive().getSheetByName("勤務可能者検索")
+            var dateValue = sheet.getRange("B7").getValue();
+            dateValue.setDate(dateValue.getDate() + 1);
+            sheet.getRange("B7").setValue(dateValue);
+        }
+        function minusOneDay() {
+            var sheet = SpreadsheetApp.getActive().getSheetByName("勤務可能者検索")
+            var dateValue = sheet.getRange("B7").getValue();
+            dateValue.setDate(dateValue.getDate() - 1);
+            sheet.getRange("B7").setValue(dateValue);
+        }
+        ```
 
         ![fig](https://github.com/yut0takagi/LP_class/blob/main/fig/GoogleSpreadSheet%E6%93%8D%E4%BD%9C%E7%94%BB%E9%9D%A2/%E5%8B%A4%E5%8B%99%E5%8F%AF%E8%83%BD%E8%80%85%E6%A4%9C%E7%B4%A2%E7%94%BB%E9%9D%A2.png)
 
@@ -57,6 +71,16 @@
     4. <storng>管理画面</storng><br>
         管理画面では、講師の追加と削除,シフト提出の該当期間,コマの設定時間,ブース数の設定,受け入れしている学年区分などを指定できるようにしました。
         さらに、勤務可能調査表を編集した際にChengeLogに追加される変更履歴をもとに最終確認日以降に変更された部分を明記する仕組みを取り入れました。
+        そして最終更新日を本日にするボタンをGoogleAppScriptで記述し実行するようにしました。
+        
+        ```GAS
+        function setDay(){
+            var timeStamp = new Date();  // 現在の時刻
+            var sheet = SpreadsheetApp.getActiveSheet();
+            sheet.getRange("I3").setValue(timeStamp);
+        }
+        ```
+
         以前では、Lineにて社員の方に変更内容を逐一送り紙面と教室PC上で変更作業を実行していたため、勝手に知らない間に変更等は起こりませんでした。
         しかし、GoogleSpreadSheetを利用することでいつでも変更できるというメリットがある反面その変更が周知されておらず、後からタスクが増えてしまうことがありました。
         そのため、ChangeLogを利用して把握できるようにしました。
@@ -64,11 +88,34 @@
         将来的には、シフト提出からコマの割り振りまでを行えるようにしたかったので、ブース数の指定や教室に関する情報を一枚のシートで管理できるようにしました。
         また、教務スタッフが新たに増えた場合は、シフト提出用のシート(氏名_勤務可能調査表)を作成し、講師指導科目のシートに一行追加するなどの作業が必要となります。
         ただ、各シートで記述している関数の中で正規表現を利用しているものが多くあるため入力ミス等が起こり適正な動作をしなかったり全体が小さなミスで使えなくなったりしてしまう場合が多かったです。
-        そのため、全ての作業をGoogleAppScriptの関数として設定し、トリガーを管理画面に追加することで上記の操作を自動化しました。
+        そのため、全ての作業をGoogleAppScriptの関数として設定し、トリガーを管理画面に追加することで上記の操作を自動化しました。実行するGoogleAppScriptのコードは以下のとおりです。
+        ```GAS
+        function duplicateSheetWithPrompt() {
+            var ss = SpreadsheetApp.getActiveSpreadsheet();
+            var sheetA = ss.getSheetByName("temp");
+            if (!sheetA) {
+                Logger.log("指定したtempが見つかりません。管理者へお伝えください。");
+                return;
+            }
+            var ui = SpreadsheetApp.getUi();
+            var response = ui.prompt(
+                "新規に作成するスタッフ名を入力してください。",
+                "ここに入力：",
+                ui.ButtonSet.OK_CANCEL
+            );
+            if (response.getSelectedButton() == ui.Button.OK) {
+                var newSheetName = response.getResponseText();
+                var newSheet = sheetA.copyTo(ss).setName(newSheetName + "_勤務可能調査表");
+                newSheet.getRange("A1").setValue(newSheetName);
+            } else {
+                Logger.log("シート複製をキャンセルしました。");
+            }
+        }
+        ```
 
         ![fig](https://github.com/yut0takagi/LP_class/blob/main/fig/GoogleSpreadSheet%E6%93%8D%E4%BD%9C%E7%94%BB%E9%9D%A2/%E7%AE%A1%E7%90%86%E7%94%BB%E9%9D%A2.png)
 
-    5. <storng>ChangeLog　変更履歴自動記録画面</storng><br>
+    5. <storng>ChangeLog 変更履歴自動記録画面</storng><br>
         管理画面の項で示した通り、変更履歴を自動で記録するシートを導入しました。
         初期の段階では、変更したら変更箇所を各自記入するようにしていましたが、面倒であり入力作業を忘れる等のミスが多発しました。
         そこで、GoogleAppScriptを用いて自動で記録するような関数を以下のようにコーディングして、運用しました。
@@ -130,4 +177,18 @@
         ```
 
         ![fig](https://github.com/yut0takagi/LP_class/blob/main/fig/GoogleSpreadSheet%E6%93%8D%E4%BD%9C%E7%94%BB%E9%9D%A2/ChangeLog%20%E5%A4%89%E5%B1%A5%E6%AD%B4%E8%87%AA%E5%8B%95%E8%A8%98%E9%8C%B2%E7%94%BB%E9%9D%A2.png)
-    
+
+    6. <storng>簡易確認シート</storng><br>
+        シフト提出されたシートを移動して確認する作業が非常に面倒であるため、確認用のシートを作成しました。
+        具体的にはA1セルの氏名を選択すると該当する講師の勤務可能状況を見ることができるようにしています。
+
+        ![fig](https://github.com/yut0takagi/LP_class/blob/main/fig/GoogleSpreadSheet%E6%93%8D%E4%BD%9C%E7%94%BB%E9%9D%A2/%E9%96%8B%E8%AC%9B%E3%82%B3%E3%83%9E%E8%A8%AD%E5%AE%9A%E7%94%BB%E9%9D%A2.png)
+
+    7. <strong>指導可能科目入力画面</strong><br>
+        教務スタッフがお互いの授業を見るといった機会が少なく、「誰がどの科目をどのレベルまで指導できるのか」を把握することができませんでした。
+        そのため、コマの割り振り後に、指導負荷であることが判明し代行を探すなどのミスが多発していました。そのため、本ファイルを導入してから1週間以内に入力をお願いし、勤務可能者検索の画面等へ反映できるようにしました。
+
+        ![fig](https://github.com/yut0takagi/LP_class/blob/main/fig/GoogleSpreadSheet%E6%93%8D%E4%BD%9C%E7%94%BB%E9%9D%A2/%E6%8C%87%E5%B0%8E%E5%8F%AF%E8%83%BD%E7%A7%91%E7%9B%AE%E5%85%A5%E5%8A%9B%E7%94%BB%E9%9D%A2.png)
+
+    8. <strong>出勤可能時間時間入力画面(講師1_勤務可能調査表)</strong><br>
+        
