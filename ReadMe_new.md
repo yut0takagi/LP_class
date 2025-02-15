@@ -197,6 +197,28 @@
         シフト提出を行うシートです。入力,変更を全てチェックボックスで選択式にすることで、入力エラーがないようにしました。
         本シートが各職員分作成し、各シートにそれぞれ入力してもらうようにしました。
         また、シートの作成は初期をPythonのOpenPyxlで行い作成しました。その後、職員の追加等を行う際には、GoogleAppScriptでtempシートをコピーし作成するようにしました。
+        初期の作成用コードは以下の通りです。
+        ```Python
+        import openpyxl
+        from datetime import date
+        path = "Path/to/勤務調査_調査用SS.xlsx"
+        wb = openpyxl.load_workbook(path,data_only=False)
+        ws_template = wb["temp"]
+        # シートの選択を解除
+        for ws in wb.worksheets:
+            ws.sheet_view.tabSelected = None
+        ws_template = wb["temp"]
+        teachers_list=["講師名1","講師名2",]
+        for teacher in teachers_list:
+            ws_copy = wb.copy_worksheet(ws_template)
+            ws_copy.title = f'{teacher}_勤務可能調査表'
+            ws_copy.cell(1,1).value = teacher
+            wb.move_sheet(ws_copy, offset=len(wb.sheetnames))
+        wb.active = 0
+        # ブック名を変更して保存
+        wb.save('勤務調査_変更後new.xlsx')
+        ```
+
         ![fig](https://github.com/yut0takagi/LP_class/blob/main/fig/GoogleSpreadSheet%E6%93%8D%E4%BD%9C%E7%94%BB%E9%9D%A2/%E5%87%BA%E5%8B%A4%E5%8F%AF%E8%83%BD%E6%99%82%E9%96%93%E5%85%A5%E5%8A%9B%E7%94%BB%E9%9D%A2(%E8%AC%9B%E5%B8%AB1_%E5%8B%A4%E5%8B%99%E5%8F%AF%E8%83%BD%E8%AA%BF%E6%9F%BB%E8%A1%A8).png)
 
 ### 2.1.2. 実装後、運用期間について　
@@ -223,8 +245,13 @@
 
 ### 2.2.1. 改善するべき課題について
 * シフト提出ツールの操作性向上
-    GoogleSpreadsheetではPCからだと操作しやすいが、
-
+    GoogleSpreadsheetではPCからだと操作しやすいが、スマートフォンからのアクセスが主流となっているため、スマートフォンからのアクセスを標準的に想定するべきであると考えました。
+* シフト提出からコマの割り振り,本部への提出書類の作成までのプロセスを一元管理できる仕組み
+    シフト管理はオンラインでできて教務スタッフ(アルバイト)は楽であるが、社員の業務負担軽減にはつながっていないとわかりました。そのため、シフトが提出されてからの工程においても完了できる仕組みづくりが重要であるとわかりました。
+* Lineなどから容易に変更,把握できる仕組み
+    Lineなどの身近な送受信を用いて変更できれば、代行検索や多くの指示が効率的になると考えます。
+* 授業評価システム
+    生徒の授業方針について各担当の教務スタッフによる独断の裁量となっているため、当該個別指導塾である価値が薄れ属人化が進んでしまっています。そのため、授業方針や授業単元について相談できるAIを活用したシステムの構築が望ましいと考えました。
 
 ## 2. 画面遷移図
 画面遷移図を以下に示す。
