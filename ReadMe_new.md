@@ -19,12 +19,11 @@
 
 > 開発用PC: `Apple MacBook Air M1 2020モデル`   
 > 教室用PC: `Lenovo ThinkStation`<br>
-> 開発時利用ツール: `Google Spread Sheet`, `Line`   
+> 開発時利用ツール: `Google Spread Sheet`   
 > 開発時利用言語: `GAS`<br>
-> 開発に必要な知識: `Line Messaging API`, `Webhook`,    
 > 動作可能環境: `Google Chrome` , `Safari`,`Firefox`
 
-### 2.2. 各種機能について
+### 2.1.1 各種機能について
 1. Google Spread Sheet でのシフト管理
     Google Spread Sheetを共有し、編集権限を限定付与することでシフト提出をオンライン上で行いました。
     運用したシートは以下のサイトから閲覧可能としております。ただし、スタッフ氏名等は変えております。
@@ -199,3 +198,35 @@
         本シートが各職員分作成し、各シートにそれぞれ入力してもらうようにしました。
         また、シートの作成は初期をPythonのOpenPyxlで行い作成しました。その後、職員の追加等を行う際には、GoogleAppScriptでtempシートをコピーし作成するようにしました。
         ![fig](https://github.com/yut0takagi/LP_class/blob/main/fig/GoogleSpreadSheet%E6%93%8D%E4%BD%9C%E7%94%BB%E9%9D%A2/%E5%87%BA%E5%8B%A4%E5%8F%AF%E8%83%BD%E6%99%82%E9%96%93%E5%85%A5%E5%8A%9B%E7%94%BB%E9%9D%A2(%E8%AC%9B%E5%B8%AB1_%E5%8B%A4%E5%8B%99%E5%8F%AF%E8%83%BD%E8%AA%BF%E6%9F%BB%E8%A1%A8).png)
+
+### 2.1.2. 実装後、運用期間について　
+    2024年10月に運用を開始し、そこから2ヶ月間の使用しました。そして、ミーティングとLineのアンケート機能を用いてフィードバックを行った結果、以下の問題が挙げられました。
+
+    1. Google App Scriptのトリガー機能をPC以外の機器から利用できないこと
+    2. Google Spreadsheetで入力する際、選択式にしていても、スマートフォンで操作すると入力タブが表示されてしまい、選択しにくいこと。
+    3. スマートフォン端末でGoogle SpreadSheetでスクロールする際に、セルを選択してしまい使いづらかった。
+    4. シフトの提出がオンラインでできるようになり、いつでも閲覧できるため提出業務が楽になった。
+    5. シフトの割り振り業務や本部へ送信する書類の作成は教室PCで行う必要があったため、シフトの転記はする必要があった。
+        ※ 入室可否について全てフォーマット通りに提出できているため再度確認する必要がなくなったのはよかった。
+    6. 生徒からの来塾可能日の調査もGoogle Spread Sheetで行えるようにすれば、集約できて良いのではないか
+    8. シフト提出のプロセスの見直しができたため、他の部分でも効率化できる部分があるのではないか
+
+## 2.2. Webアプリによるシフト提出からコマの割り振り,授業の管理まで改善(Ver.2)
+### 開発環境について
+本システムの開発に使用しているローカル環境は以下の通りです。   
+
+> 開発用PC: `Apple MacBook Air M1 2020モデル`   
+> 教室用PC: `Lenovo ThinkStation`<br>
+> 開発時利用ツール: `VSCode`, `` , `Google Spread Sheet`   
+> 開発時利用言語: `Python`, `SQL`, `HTML`, `CSS`, `JavaScript`<br>
+> 動作可能環境: `Google Chrome` , `Safari`
+
+### 2.2.1. 改善するべき課題について
+* シフト提出ツールの操作性向上
+    GoogleSpreadsheetではPCからだと操作しやすいが、
+
+
+## 2. 画面遷移図
+画面遷移図を以下に示す。
+
+![画面遷移図](https://github.com/yut0takagi/LP_class/blob/main/fig/%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3.png?raw=true "Giithub")
