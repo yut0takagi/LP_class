@@ -27,6 +27,10 @@
 ### 2.2. 各種機能について
 1. Google Spread Sheet でのシフト管理
     Google Spread Sheetを共有し、編集権限を限定付与することでシフト提出をオンライン上で行いました。
+    運用したシートは以下のサイトから閲覧可能としております。ただし、スタッフ氏名等は変えております。
+    ```url
+    https://docs.google.com/spreadsheets/d/1RhHQKz_VnE5092DTtkHDm88jv8AuY55PCxYU0BiCSa4/edit?usp=sharing
+    ```
     各種ページは以下のとおりです。
     1. <storng>マニュアルページ</storng><br>
         マニュアルページでは、操作方法の説明や動作環境等についてまとめました。
