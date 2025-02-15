@@ -28,4 +28,6 @@
 1. Google Spread Sheet でのシフト管理
     Google Spread Sheetを共有し、編集権限を限定付与することでシフト提出をオンライン上で行いました。
     各種ページは以下のとおりです。
-    1. マニュアルページ
+    1. <storng>マニュアルページ</storng><br>
+        マニュアルページでは、操作方法の説明や動作環境等についてまとめました。
+        ![fig](https://github.com/yut0takagi/LP_class/blob/main/fig/GoogleSpreadSheet%E6%93%8D%E4%BD%9C%E7%94%BB%E9%9D%A2/%E3%83%9E%E3%83%8B%E3%83%A5%E3%82%A2%E3%83%AB.png)
