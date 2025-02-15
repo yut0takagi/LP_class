@@ -191,4 +191,7 @@
         ![fig](https://github.com/yut0takagi/LP_class/blob/main/fig/GoogleSpreadSheet%E6%93%8D%E4%BD%9C%E7%94%BB%E9%9D%A2/%E6%8C%87%E5%B0%8E%E5%8F%AF%E8%83%BD%E7%A7%91%E7%9B%AE%E5%85%A5%E5%8A%9B%E7%94%BB%E9%9D%A2.png)
 
     8. <strong>出勤可能時間時間入力画面(講師1_勤務可能調査表)</strong><br>
-        
+        シフト提出を行うシートです。入力,変更を全てチェックボックスで選択式にすることで、入力エラーがないようにしました。
+        本シートが各職員分作成し、各シートにそれぞれ入力してもらうようにしました。
+        また、シートの作成は初期をPythonのOpenPyxlで行い作成しました。その後、職員の追加等を行う際には、GoogleAppScriptでtempシートをコピーし作成するようにしました。
+        ![fig](https://github.com/yut0takagi/LP_class/blob/main/fig/GoogleSpreadSheet%E6%93%8D%E4%BD%9C%E7%94%BB%E9%9D%A2/%E5%87%BA%E5%8B%A4%E5%8F%AF%E8%83%BD%E6%99%82%E9%96%93%E5%85%A5%E5%8A%9B%E7%94%BB%E9%9D%A2(%E8%AC%9B%E5%B8%AB1_%E5%8B%A4%E5%8B%99%E5%8F%AF%E8%83%BD%E8%AA%BF%E6%9F%BB%E8%A1%A8).png)
