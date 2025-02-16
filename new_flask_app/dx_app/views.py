@@ -24,11 +24,14 @@ def make_dict(pagenames):
     if pagenames =="login":
         dict["title"] = "ログイン"
         dict["login"] = False
-    if pagenames =="make-account":
+    elif pagenames =="make-account":
         dict["title"] = "アカウントの新規作成"
         dict["login"] = False
     elif pagenames =="dashboard":
         dict["title"] = "ダッシュボード"
+        dict["login"] = True
+    elif pagenames =="chatbot":
+        dict["title"] = "教室運営用AIエージェント"
         dict["login"] = True
     return dict
 
@@ -53,3 +56,6 @@ def edit_profile():
     return render_template("dx_app/edit-profile.html",data=make_dict("edit-profile"))
 
 
+@app.route('/chatbot')
+def chat_bot():
+    return render_template("dx_app/chatbot.html",data=make_dict("chatbot"))

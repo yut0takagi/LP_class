@@ -7,7 +7,7 @@ import numpy as np
 import datetime as dt
 from tqdm import tqdm
 from IPython.display import display
-from tqdm imort tqdm
+from tqdm import tqdm
 
 
 def LP_makeTestData():
