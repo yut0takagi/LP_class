@@ -1,0 +1,97 @@
+{% extends "layoutForLogined.html" %}
+{% block content %}
+    <h2 class="text-3xl font-bold text-gray-800">📅 シフト提出</h2>
+
+    <form action="{{ url_for('submit_shift') }}" method="POST" class="mt-6 bg-white p-6 shadow-md rounded-lg">
+        <div class="relative overflow-x-auto">
+            <div class="flex">
+                <!-- 固定される時限（左列） -->
+                <table class="border-collapse border border-gray-300 bg-white sticky left-0 z-10 shadow-md">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <!-- 時限セルを2行分の高さにする -->
+                            <th class="border border-gray-300 px-4 py-4 text-center min-w-[150px]">日付</th>
+                        </tr>
+                        <tr class="bg-gray-100">
+                            <!-- 空のセルを追加して、日付と曜日の行数を合わせる -->
+                            <th class="border border-gray-300 px-4 py-4 text-center min-w-[150px]">曜日</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for period in data["data"][2] %}
+                        <tr class="bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-4 text-center font-bold">{{ period }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+    
+                <!-- 横スクロール可能な日付列 -->
+                <div class="overflow-x-auto w-[calc(100vw-16rem)]">
+                    <table class="min-w-max border-collapse border border-gray-300">
+                        <thead>
+                            <tr class="bg-gray-200">
+                                {% for date in data["data"][1] %}
+                                <th class="border border-gray-300 px-4 py-4 text-center min-w-[180px]">{{ date }}</th>
+                                {% endfor %}
+                            </tr>
+                            <tr class="bg-gray-100">
+                                {% for weekday in data["data"][3] %}
+                                <th class="border border-gray-300 px-4 py-4 text-center min-w-[180px]">{{ weekday }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for period in data["data"][2] %}
+                            <tr class="bg-gray-50">
+                                {% for date in data["data"][1] %}
+                                <td class="border border-gray-300 px-4 py-4 text-center min-w-[180px]">
+                                    <label class="inline-flex items-center space-x-2">
+                                        <input type="radio" name="shift_{{ period }}_{{ date }}" value="○" class="hidden">
+                                        <span class="px-3 py-1 rounded-md bg-green-500 text-white cursor-pointer select-option">○</span>
+                                    </label>
+                                    <label class="inline-flex items-center space-x-2">
+                                        <input type="radio" name="shift_{{ period }}_{{ date }}" value="✖" class="hidden">
+                                        <span class="px-3 py-1 rounded-md bg-red-500 text-white cursor-pointer select-option">✖</span>
+                                    </label>
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+        <button type="submit" class="mt-6 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 w-full">
+            確定
+        </button>
+    </form>
+
+    <script>
+        // ○✖ の選択スタイルを変更するスクリプト
+        document.querySelectorAll(".select-option").forEach(item => {
+            item.addEventListener("click", function() {
+                // 同じセル内の選択をリセット
+                this.parentElement.parentElement.querySelectorAll(".select-option").forEach(el => {
+                    el.classList.remove("bg-green-500", "bg-red-500");
+                    el.classList.add("bg-gray-300");
+                });
+
+                // 選択された要素に色をつける
+                if (this.innerText === "○") {
+                    this.classList.remove("bg-gray-300");
+                    this.classList.add("bg-green-500");
+                } else {
+                    this.classList.remove("bg-gray-300");
+                    this.classList.add("bg-red-500");
+                }
+
+                // 隠しラジオボタンを選択
+                this.previousElementSibling.checked = true;
+            });
+        });
+    </script>
+
+{% endblock %}

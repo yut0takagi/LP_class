@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>{{ data["title"] }}</title>
+</head>
+<body class="bg-gray-100 flex">
+
+    <!-- 上部ナビバー -->
+    <header class="fixed top-0 left-0 w-full h-14 bg-blue-800 text-white flex items-center px-6 shadow-md z-50">
+        <h1 class="text-lg font-bold">ForEducator</h1>
+        <nav class="ml-auto">
+            <a href="#" class="px-4 py-2 hover:bg-blue-700 rounded-md">🏠 ホーム</a>
+            <a href="#" class="px-4 py-2 hover:bg-blue-700 rounded-md">📄 個人情報の編集</a>
+            <a href="#" class="px-4 py-2 hover:bg-blue-700 rounded-md">📞 お問い合わせ</a>
+        </nav>
+    </header>
+
+    <!-- 左サイドナビバー -->
+    <nav class="fixed top-14 left-0 w-64 h-[calc(100vh-3.5rem)] bg-gray-900 text-white flex flex-col shadow-lg z-40">
+        <ul class="flex-1">
+            <li>
+                <a href="/dashboard" class="block py-3 px-6 hover:bg-gray-700">🏠 ダッシュボード</a>
+            </li>
+            <li>
+                <a href="#" class="block py-3 px-6 hover:bg-gray-700">🏠 シフトの確認</a>
+            </li>
+            <li>
+                <a href="/shift-sub" class="block py-3 px-6 hover:bg-gray-700">🏠 シフトの提出</a>
+            </li>
+            <li>
+                <a href="#" class="block py-3 px-6 hover:bg-gray-700">🏠 生徒管理</a>
+            </li>
+            <li>
+                <a href="#" class="block py-3 px-6 hover:bg-gray-700">🏠 教室管理</a>
+            </li>
+            <li>
+                <a href="/chatbot" class="block py-3 px-6 hover:bg-gray-700">📄 運営用AIエージェント</a>
+            </li>
+            <li>
+                <a href="#" class="block py-3 px-6 hover:bg-gray-700">📄 指導用AIエージェント</a>
+            </li>
+            <li>
+                <a href="#" class="block py-3 px-6 hover:bg-gray-700">⚙ 設定</a>
+            </li>
+        </ul>
+
+        <!-- ログアウトボタン -->
+        <div class="border-t border-gray-700 p-4">
+            <a href="#" class="block py-2 px-6 bg-red-600 hover:bg-red-500 text-center rounded-md">
+                🚪 ログアウト
+            </a>
+        </div>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <main class="ml-64 mt-14 p-8 w-[calc(100%-16rem)] ml-64">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+</html>

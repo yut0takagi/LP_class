@@ -1,97 +1,120 @@
-{% extends "layout.html" %}
+{% extends "layoutForLogined.html" %}
 {% block content %}
-<div class="row justify-content-center align-items-stretch mt-4">
-    <!-- 本日の予定 -->
-    <div class="col-8 d-flex flex-column">
-        <div class="card shadow flex-grow-1" style="background-color: #FBFBFB; border-radius: 15px;">
-            <div class="card-body text-center d-flex flex-column">
-                <h2 class="mt-3">本日の予定</h2>
-                <p>今日の授業予定です。生徒名は、教室にてご確認ください。</p>
-                <!-- テーブル部分 -->
-                <table class="table table-bordered mt-auto" style="table-layout: fixed; width: 100%;" aria-label="本日の授業スケジュール">
-                    <thead>
-                        <tr>
-                            <th scope="col">コマ</th>
-                            <th scope="col">AB</th>
-                            <th scope="col">CD</th>
-                            <th scope="col">EF</th>
-                            <th scope="col">GH</th>
-                            <th scope="col">IJ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><th scope="row">10:50-</th><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><th scope="row">12:50-</th><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><th scope="row">14:20-</th><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><th scope="row">15:50-</th><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><th scope="row">17:20-</th><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><th scope="row">18:40-</th><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><th scope="row">20:20-</th><td></td><td></td><td></td><td></td><td></td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+<div class="max-w-6xl mx-auto space-y-6">
+    <!-- メインコンテンツ -->
+    <div class="bg-white shadow-md rounded-lg p-6 flex flex-col items-center space-y-4">
+        <h3 class="text-lg font-semibold text-gray-800">お知らせ</h3>
+        <p>現在、お知らせは特にございません。</p>
     </div>
-    <!-- 今後の予定 -->
-    <div class="col-4 d-flex flex-column">
-        <div class="card shadow flex-grow-1 mb-3" style="background-color: #FBFBFB; border-radius: 15px;">
-            <div class="card-body text-center d-flex flex-column">
-                <h2 class="mt-3">次の予定</h2>
-                <p>あなたの次の出勤予定は</p>
-                <h3 class="mt-3">3月12日 12:50分</h3>
-                <p class="mt-auto">です。</p>
+    <div class="max-w-6xl mx-auto space-y-8">
+        <!-- 上部の3カラムレイアウト（高さ統一） -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- 本日の予定（高さを統一） -->
+            <div class="col-span-2 bg-white shadow-md rounded-lg p-6 flex flex-col h-full">
+                <h2 class="text-2xl font-bold text-gray-800 text-center">本日の予定</h2>
+                <p class="text-gray-600 text-center">今日の授業予定です。生徒名、教室にてご確認ください。</p>
+                <div class="overflow-x-auto mt-4 flex-grow">
+                    <table class="w-full border border-gray-400">
+                        <thead>
+                            <tr class="bg-gray-200">
+                                <!-- コマ列（狭く固定） -->
+                                <th class="border border-gray-400 px-2 py-2 min-w-[80px] text-center">コマ</th>
+                                <!-- その他の列（均等固定） -->
+                                <th class="border border-gray-400 px-4 py-2 w-1/5 text-center">AB</th>
+                                <th class="border border-gray-400 px-4 py-2 w-1/5 text-center">CD</th>
+                                <th class="border border-gray-400 px-4 py-2 w-1/5 text-center">EF</th>
+                                <th class="border border-gray-400 px-4 py-2 w-1/5 text-center">GH</th>
+                                <th class="border border-gray-400 px-4 py-2 w-1/5 text-center">IJ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-white">
+                                <td class="border border-gray-400 px-2 py-2 min-w-[80px] text-center">10:50-</td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="border border-gray-400 px-2 py-2 min-w-[80px] text-center">12:50-</td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="border border-gray-400 px-2 py-2 min-w-[80px] text-center">12:50-</td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="border border-gray-400 px-2 py-2 min-w-[80px] text-center">12:50-</td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="border border-gray-400 px-2 py-2 min-w-[80px] text-center">12:50-</td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="border border-gray-400 px-2 py-2 min-w-[80px] text-center">12:50-</td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                                <td class="border border-gray-400 px-4 py-2 w-1/5 text-center"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <div class="card shadow flex-grow-1" style="background-color: #FBFBFB; border-radius: 15px;">
-            <div class="card-body d-flex flex-column">
-                <h2 class="mt-3 text-center">シフト管理</h2>
-                <p>今現在、あなたのタスクはすべて完了しております。</p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row justify-content-center align-items-stretch mt-4">
-    <!-- 代行検索 -->
-    <div class="col-12 d-flex flex-column">
-        <div class="card shadow flex-grow-1" style="background-color: #FBFBFB; border-radius: 15px;">
-            <div class="card-body text-center d-flex flex-column">
-                <h2 class="mt-3">代行検索</h2>
-                <p>簡易的に代行検索を行えます。</p>
-                <div class="row">
-                    <div class="col-4">
-                        <!-- 学年と科目-->
-                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                            <option selected>学年と科目</option>
-                            <!--ここ変更(教室管理画面から変更可能にする。)-->
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                    <div class="col-4">
-                        <!-- 開始日-->
-                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                            <option selected>開始日</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                    <div class="col-4">
-                        <!-- 終了日-->
-                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                            <option selected>終了日</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
+
+            <!-- 右側の2つを高さ統一 -->
+            <div class="flex flex-col gap-4 h-full">
+                <!-- 次の予定 -->
+                <div class="bg-white shadow-md rounded-lg p-6 flex flex-col justify-between h-full min-h-[180px]">
+                    <h3 class="text-lg font-semibold text-gray-800 text-center">次の予定</h3>
+                    <p class="text-gray-600 text-center">あなたの次の出勤予定は</p>
+                    <p class="text-2xl font-bold text-gray-800 mt-2 text-center">3月12日 12:50分</p>
+                    <p class="text-gray-600 text-center">です。</p>
+                </div>
+
+                <!-- シフト管理 -->
+                <div class="bg-white shadow-md rounded-lg p-6 flex flex-col justify-between h-full min-h-[180px]">
+                    <h3 class="text-lg font-semibold text-gray-800 text-center">シフト管理</h3>
+                    <p class="text-gray-600 text-center">今現在、あなたのタスクはすべて完了しております。</p>
                 </div>
             </div>
         </div>
+    
+    <!-- 代行検索 -->
+    <div class="bg-white shadow-md rounded-lg p-6 flex flex-col items-center space-y-4">
+        <h3 class="text-lg font-semibold text-gray-800">代行検索</h3>
+        <p class="text-gray-600">簡易的に代行検索を行えます。</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+            <select class="border border-gray-300 rounded-md px-4 py-2">
+                <option>学年と科目</option>
+            </select>
+            <select class="border border-gray-300 rounded-md px-4 py-2">
+                <option>開始日</option>
+            </select>
+            <select class="border border-gray-300 rounded-md px-4 py-2">
+                <option>終了日</option>
+            </select>
+        </div>
     </div>
 </div>
-
-
 
 {% endblock %}
