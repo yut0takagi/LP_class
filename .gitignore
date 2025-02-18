@@ -1,0 +1,42 @@
+# AIエージェント関連
+AI-Agent/
+logs/
+*.log
+
+# macOSの不要ファイル
+.DS_Store
+
+# Windowsの不要ファイル
+Thumbs.db
+
+# Git関連（`.gitignore` は除外しない）
+.gitconfig
+
+# Pythonの仮想環境・キャッシュ
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Node.js（もし使っていれば）
+node_modules/
+dist/
+
+# IDEの設定ファイル
+.vscode/
+.idea/
+*.iml
+
+# 環境変数ファイルを無視
+.env
+*.env
+
+# Jupyter Notebook のチェックポイントを無視
+*.ipynb_checkpoints/.env
+*.ipynb_checkpoints/
+
+
+# FLASK関連
+chat_history.json
+error.log

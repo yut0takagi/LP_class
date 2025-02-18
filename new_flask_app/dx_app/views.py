@@ -7,6 +7,13 @@ import datetime
 app = Flask(__name__)
 from dx_app import app
 
+
+
+
+# 環境変数の定義
+ENV_PATH= "/Users/y.takagi/GitHub/LP_class/new_flask_app/dx_app/.env"
+
+
 staff_list = [
     {"id": 1, "name": "田中"},
     {"id": 2, "name": "佐藤"},
@@ -20,6 +27,7 @@ weekday_list = [date.strftime("%a") for date in date_list]  # "Mon", "Tue", "Wed
 date_str_list = [date.strftime("%Y-%m-%d") for date in date_list]  # YYYY-MM-DD 形式
 # 時限のリスト（例: 1限〜5限）
 period_list = ["1限", "2限", "3限", "4限", "5限"]
+
 
 
 def make_dict(pagename):
@@ -44,7 +52,6 @@ def make_dict(pagename):
         dict["title"] = titles[pagename]
     except:
         dict["title"] = "ページが見つかりません"
-        
     try:
         dict["data"]=[staff_list,date_list, period_list,weekday_list]
     except:
@@ -78,13 +85,13 @@ def chat_bot():
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    env_path = "/Users/y.takagi/GitHub/LP_class/new_flask_app/dx_app/.env"  # 例: "/home/user/project/.env"
+    global ENV_PATH
+    env_path = ENV_PATH
     config = dotenv_values(env_path)
     # OPENAI_API_KEY を取得
     openai.api_key = config.get("OPENAI_API_KEY")
     data = request.get_json()
     user_message = data.get("message", "")
-
     try:
         # OpenAI API で応答を取得
         response = openai.ChatCompletion.create(
@@ -98,12 +105,9 @@ def chat():
 
     return jsonify({"response": ai_response})
 
-
 @app.route('/shift-sub')
 def shift():
     return render_template("dx_app/shift-sub.html",data=make_dict("shift-sub"))
-
-
 
 @app.route("/submit_shift", methods=["POST"])
 def submit_shift():
@@ -118,3 +122,11 @@ def submit_shift():
     print("提出されたシフト:", submitted_shifts)
 
     return redirect(url_for("shift"))
+
+
+
+
+# 設定画面
+@app.route('/settings')
+def settings():
+    return render_template("dx_app/settings.html",data=make_dict("settings"))
