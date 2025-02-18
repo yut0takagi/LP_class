@@ -1,38 +1,63 @@
 {% extends "layoutForLogined.html" %}
 
 {% block content %}
-<h2 class="text-3xl font-bold text-gray-800 mb-6">📅 シフト確認</h2>
+<h2 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+    📅 シフト確認
+    <select id="month-select" class="ml-4 border border-gray-300 rounded p-2">
+        {% for month in data["available_months"] %}
+        <option value="{{ month['year'] }}-{{ month['month'] }}" {% if month['year'] == data["current_year"] and month['month'] == data["current_month"] %}selected{% endif %}>
+            {{ month["year"] }}年 {{ month["month"] }}月
+        </option>
+        {% endfor %}
+    </select>
+</h2>
 
 <!-- カレンダー -->
-<div class="grid grid-cols-7 gap-2 border border-gray-300 p-4 bg-white shadow-md rounded-lg">
-    <!-- 曜日のヘッダー -->
-    <div class="text-center font-bold text-red-500">日</div>
-    <div class="text-center font-bold">月</div>
-    <div class="text-center font-bold">火</div>
-    <div class="text-center font-bold">水</div>
-    <div class="text-center font-bold">木</div>
-    <div class="text-center font-bold">金</div>
-    <div class="text-center font-bold text-blue-500">土</div>
+<div id="calendar-container">
+    <div class="grid grid-cols-7 gap-2 border border-gray-300 p-4 bg-white shadow-md rounded-lg">
+        <!-- 曜日のヘッダー -->
+        <div class="text-center font-bold text-red-500">日</div>
+        <div class="text-center font-bold">月</div>
+        <div class="text-center font-bold">火</div>
+        <div class="text-center font-bold">水</div>
+        <div class="text-center font-bold">木</div>
+        <div class="text-center font-bold">金</div>
+        <div class="text-center font-bold text-blue-500">土</div>
 
-    {% for week in data["calendar"] %}
-        {% for day in week %}
-            <div class="border border-gray-300 min-h-[100px] p-2 bg-gray-100 relative">
-                <div class="text-sm font-bold absolute top-1 left-1">{{ day["date"].day }}</div>
+        {% for week in data["calendar"] %}
+            {% for day in week %}
+                <div class="border border-gray-300 min-h-[100px] p-2 bg-gray-100 relative">
+                    <div class="text-sm font-bold absolute top-1 left-1">{{ day["date"].day }}</div>
 
-                <table class="w-full mt-4 border-collapse">
-                    <tbody>
-                        {% for shift in day["shifts"] %}
-                        <tr class="border border-gray-300 bg-white">
-                            <td class="text-xs text-center p-1">
-                                {{ shift["time"] }}<br>
-                                {{ shift["student_grade"] }} - {{ shift["subject"] }}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+                    <table class="w-full mt-4 border-collapse">
+                        <tbody>
+                            {% for shift in day["shifts"] %}
+                            <tr class="border border-gray-300 bg-white">
+                                <td class="text-xs text-center p-1">
+                                    {{ shift["time"] }}<br>
+                                    {{ shift["student_grade"] }} - {{ shift["subject"] }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
+    </div>
 </div>
+
+<script>
+document.getElementById("month-select").addEventListener("change", function() {
+    let selectedMonth = this.value;  // 選択された年と月 (YYYY-MM)
+    
+    // カレンダーを更新するAPIを呼び出す
+    fetch(`/get_calendar?month=${selectedMonth}`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById("calendar-container").innerHTML = html;
+        });
+});
+</script>
+
 {% endblock %}
