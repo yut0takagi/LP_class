@@ -3,14 +3,17 @@ import openai
 import json
 from dotenv import dotenv_values
 import os
+import calendar
 import datetime
+from datetime import timedelta
+
+
 app = Flask(__name__)
 from dx_app import app
 
 
-
-
 # 環境変数の定義
+# Path
 ENV_PATH= "/Users/y.takagi/GitHub/LP_class/new_flask_app/dx_app/.env"
 
 
@@ -20,6 +23,7 @@ staff_list = [
     {"id": 3, "name": "鈴木"}
 ]
 # 日付のリスト（例: 今日から1週間分）
+# シフト提出の該当期間を設定する。
 date_list = [datetime.date.today() + datetime.timedelta(days=i) for i in range(50)]
 # 曜日のリスト（日本語で表示）
 weekday_list = [date.strftime("%a") for date in date_list]  # "Mon", "Tue", "Wed" など
@@ -27,6 +31,7 @@ weekday_list = [date.strftime("%a") for date in date_list]  # "Mon", "Tue", "Wed
 date_str_list = [date.strftime("%Y-%m-%d") for date in date_list]  # YYYY-MM-DD 形式
 # 時限のリスト（例: 1限〜5限）
 period_list = ["1限", "2限", "3限", "4限", "5限"]
+
 
 
 
@@ -58,6 +63,9 @@ def make_dict(pagename):
         dict["data"] = "データが取得できませんでした"
     return dict
 
+
+# __ログイン前の処理となるため、layoutは"new_flask_app/dx_app/templates/layoutForBeforeLogin.html"となる。
+# ホームページの設定
 @app.route('/')
 def homepage():
     return render_template("dx_app/homepage.html",data=make_dict("homepage"))
@@ -70,14 +78,42 @@ def login():
 def make_account():
     return render_template("dx_app/make_account.html",data=make_dict("make-account"))
 
-@app.route("/dashboard")
-def dashboard():
-    return render_template("dx_app/dashboard.html",data=make_dict("dashboard"))
-
 @app.route("/edit-profile")
 def edit_profile():
     return render_template("dx_app/edit-profile.html",data=make_dict("edit-profile"))
 
+
+# ログイン後のページであるため、layoutは"new_flask_app/dx_app/templates/layoutForLogined.html"とする。
+@app.route("/dashboard")
+def dashboard():
+    return render_template("dx_app/dashboard.html",data=make_dict("dashboard"))
+
+
+@app.route("/check-shift")
+def check_shift():
+    # カレンダーを生成する
+    today = datetime.datetime.today()
+    year, month = today.year, today.month
+    cal = calendar.Calendar(firstweekday=6)  # 日曜日スタート
+    month_days = cal.monthdatescalendar(year, month)
+
+    shift_data = {
+        datetime.datetime(year, month, 5): [{"time": "10:00", "student_grade": "中3", "subject": "数学"}],
+        datetime.datetime(year, month, 12): [{"time": "15:00", "student_grade": "高1", "subject": "英語"}],
+        datetime.datetime(year, month, 18): [{"time": "18:00", "student_grade": "中2", "subject": "理科"}],
+    }
+
+    calendar_data = []
+    for week in month_days:
+        week_data = []
+        for day in week:
+            week_data.append({
+                "date": day,
+                "shifts": shift_data.get(day, [])  # シフトデータがあれば追加
+            })
+        calendar_data.append(week_data)
+
+    return render_template("dx_app/check-shift.html", data={"title": "シフト確認", "calendar": calendar_data})
 
 @app.route('/chatbot')
 def chat_bot():
