@@ -8,6 +8,7 @@ gunicorn = "*"
 flask = "*"
 flask-login = "*"
 flask-sqlalchemy = "*"
+flask-migrate = "*"
 
 [dev-packages]
 

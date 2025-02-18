@@ -1,4 +1,79 @@
 {% extends "layoutForLogined.html" %}
 {% block content %}
-<h2>生徒管理</h2>
+<h2 class="text-3xl font-bold text-gray-800 mb-6">👩‍🎓 生徒管理</h2>
+
+<!-- フィルタリングフォーム -->
+<form id="filter-form" class="bg-white p-4 shadow-md rounded-lg mb-4">
+    <div class="grid grid-cols-4 gap-4">
+        <div>
+            <label class="block font-bold mb-1">学年</label>
+            <select id="grade-filter" class="w-full border p-2 rounded">
+                <option value="">すべて</option>
+                <option value="小学生">小学生</option>
+                <option value="中学生">中学生</option>
+                <option value="高校生">高校生</option>
+            </select>
+        </div>
+        <div>
+            <label class="block font-bold mb-1">科目</label>
+            <select id="subject-filter" class="w-full border p-2 rounded">
+                <option value="">すべて</option>
+                <option value="数学">数学</option>
+                <option value="英語">英語</option>
+                <option value="理科">理科</option>
+                <option value="社会">社会</option>
+            </select>
+        </div>
+        <div>
+            <label class="block font-bold mb-1">担当講師</label>
+            <select id="teacher-filter" class="w-full border p-2 rounded">
+                <option value="">すべて</option>
+                {% for teacher in data["teachers"] %}
+                <option value="{{ teacher }}">{{ teacher }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label class="block font-bold mb-1">状態</label>
+            <select id="status-filter" class="w-full border p-2 rounded">
+                <option value="">すべて</option>
+                <option value="在籍">在籍</option>
+                <option value="休会">休会</option>
+                <option value="退会">退会</option>
+            </select>
+        </div>
+    </div>
+</form>
+
+<!-- 生徒一覧 -->
+<div class="bg-white p-4 shadow-md rounded-lg">
+    <table class="w-full border-collapse border border-gray-300" id="student-table">
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="border border-gray-300 px-4 py-2">生徒ID</th>
+                <th class="border border-gray-300 px-4 py-2">名前</th>
+                <th class="border border-gray-300 px-4 py-2">学年</th>
+                <th class="border border-gray-300 px-4 py-2">担当講師</th>
+                <th class="border border-gray-300 px-4 py-2">科目</th>
+                <th class="border border-gray-300 px-4 py-2">状態</th>
+                <th class="border border-gray-300 px-4 py-2">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in data["students"] %}
+            <tr class="bg-gray-50">
+                <td class="border border-gray-300 px-4 py-2">{{ student["id"] }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ student["name"] }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ student["grade"] }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ student["teacher"] }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ student["subject"] }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ student["status"] }}</td>
+                <td class="border border-gray-300 px-4 py-2">
+                    <a href="/student/{{ student['id'] }}" class="bg-blue-500 text-white px-3 py-1 rounded">詳細を見る</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

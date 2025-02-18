@@ -1,0 +1,41 @@
+{% extends "layoutForLogined.html" %}
+{% block content %}
+<h2 class="text-3xl font-bold text-gray-800 mb-6">👩‍🎓 生徒詳細</h2>
+
+<form id="student-form" action="/student/{{ student['id'] }}/update" method="POST" class="bg-white p-6 shadow-md rounded-lg">
+    <div class="grid grid-cols-2 gap-4">
+        <div>
+            <label class="block font-bold mb-1">名前</label>
+            <input type="text" name="name" value="{{ student['name'] }}" class="w-full border p-2 rounded">
+        </div>
+        <div>
+            <label class="block font-bold mb-1">学年</label>
+            <select name="grade" class="w-full border p-2 rounded">
+                <option value="小学生" {% if student['grade'] == "小学生" %}selected{% endif %}>小学生</option>
+                <option value="中学生" {% if student['grade'] == "中学生" %}selected{% endif %}>中学生</option>
+                <option value="高校生" {% if student['grade'] == "高校生" %}selected{% endif %}>高校生</option>
+            </select>
+        </div>
+        <div>
+            <label class="block font-bold mb-1">担当講師</label>
+            <input type="text" name="teacher" value="{{ student['teacher'] }}" class="w-full border p-2 rounded">
+        </div>
+        <div>
+            <label class="block font-bold mb-1">科目</label>
+            <input type="text" name="subject" value="{{ student['subject'] }}" class="w-full border p-2 rounded">
+        </div>
+        <div>
+            <label class="block font-bold mb-1">状態</label>
+            <select name="status" class="w-full border p-2 rounded">
+                <option value="在籍" {% if student['status'] == "在籍" %}selected{% endif %}>在籍</option>
+                <option value="休会" {% if student['status'] == "休会" %}selected{% endif %}>休会</option>
+                <option value="退会" {% if student['status'] == "退会" %}selected{% endif %}>退会</option>
+            </select>
+        </div>
+    </div>
+
+    <button type="submit" class="mt-6 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-500 w-full">
+        保存
+    </button>
+</form>
+{% endblock %}
