@@ -8,7 +8,6 @@ from dx_app.models import db  # models の db をインポート
 from dx_app.models.user import User
 
 migrate = Migrate()
-login_manager = LoginManager()
 csrf = CSRFProtect()
 # DB と LoginManager の初期化（appより前に定義する）
 login_manager = LoginManager()
@@ -22,6 +21,13 @@ def create_app():
     login_manager.init_app(app)
     csrf.init_app(app)
 
+    # 🔹 未認証ユーザーは 'auth.login' へリダイレクト
+    login_manager.login_view = "auth.login"
+    
+    # 404 Not found errorについての遷移
+    from dx_app.views.misc import page_not_found
+    app.register_error_handler(404, page_not_found)
+
     # 🔵 Blueprint の登録
     from dx_app.views.auth import bp as auth_bp
     from dx_app.views.dashboard import bp as dashboard_bp
@@ -29,6 +35,7 @@ def create_app():
     from dx_app.views.student import bp as student_bp
     from dx_app.views.chatbot import bp as chatbot_bp
     from dx_app.views.misc import bp as misc_bp
+    from dx_app.views.classroom import bp as classroom_bp
 
 
     app.register_blueprint(auth_bp, url_prefix="/auth")
@@ -37,6 +44,7 @@ def create_app():
     app.register_blueprint(student_bp, url_prefix="/student")
     app.register_blueprint(chatbot_bp, url_prefix="/chatbot")
     app.register_blueprint(misc_bp, url_prefix="")
+    app.register_blueprint(classroom_bp, url_prefix="/classroom")
     return app
 
 @login_manager.user_loader

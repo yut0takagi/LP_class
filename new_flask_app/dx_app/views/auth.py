@@ -7,48 +7,37 @@ from dx_app import db
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
+
 @bp.route("/register", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
 
-    if form.validate_on_submit():  # フォームがバリデーションを通過した場合
-        student_id = form.student_id.data
+    if form.validate_on_submit():  # フォームのバリデーションが成功した場合
+        name = form.name.data
         email = form.email.data
-        phone = form.phone.data
-        emergency_phone1 = form.emergency_phone1.data
-        emergency_phone2 = form.emergency_phone2.data
-        emergency_phone3 = form.emergency_phone3.data
-        dob = form.dob.data
-        gender = form.gender.data
-        address = form.address.data
         password = form.password.data
+        user_type = form.user_type.data
 
-        # すでに存在するユーザーか確認
+        # 既に登録されているメールアドレスかチェック
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
             flash("このメールアドレスは既に登録されています。", "danger")
             return redirect(url_for("auth.register"))
 
-        # 新規ユーザーの作成
+        # 新規ユーザー作成
         new_user = User(
-            student_id=student_id,
+            name=name,
             email=email,
-            phone=phone,
-            emergency_phone1=emergency_phone1,
-            emergency_phone2=emergency_phone2,
-            emergency_phone3=emergency_phone3,
-            dob=dob,
-            gender=gender,
-            address=address
+            user_type=user_type
         )
-        new_user.set_password(password)
+        new_user.set_password(password)  # ハッシュ化
         db.session.add(new_user)
         db.session.commit()
 
         flash("登録が完了しました！ログインしてください。", "success")
         return redirect(url_for("auth.login"))
 
-    return render_template("auth/register.html", form=form, data=make_dict("make-account"))
+    return render_template("auth/register.html", form=form)
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
@@ -64,12 +53,8 @@ def login():
 
     return render_template("auth/login.html", form=form, data=make_dict("login"))
 
-@bp.route("/make-account", methods=["POST","GET"])
-def make_account():
-    return render_template("auth/make_account.html")
 
-
-@bp.route("/logout")
+@bp.route("/logout", methods=["GET"])
 @login_required
 def logout():
     logout_user()

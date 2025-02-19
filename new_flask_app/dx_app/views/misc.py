@@ -7,14 +7,16 @@ bp = Blueprint("misc", __name__)
 def homepage():
     return render_template("misc/homepage.html",data=make_dict("homepage"))
 
-
 @bp.route("/edit-profile")
 def edit_profile():
-    return render_template("dx_app/edit-profile.html",data=make_dict("edit-profile"))
-
-
+    return render_template("misc/edit-profile.html",data=make_dict("edit-profile"))
 
 # 設定画面
 @bp.route('/settings')
 def settings():
-    return render_template("dx_app/settings.html",data=make_dict("settings"))
+    return render_template("misc/settings.html",data=make_dict("settings"))
+
+
+# エラーについての処理
+def page_not_found(e):
+    return render_template("errors/404.html"), 404

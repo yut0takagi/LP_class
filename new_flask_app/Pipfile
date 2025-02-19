@@ -18,5 +18,6 @@ flask-login = "*"
 flask-wtf = "*"
 openai = "*"
 python-dotenv = "*"
+email-validator = "*"
 
 [dev-packages]

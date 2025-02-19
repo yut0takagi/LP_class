@@ -22,37 +22,35 @@
     <nav class="fixed top-14 left-0 w-64 h-[calc(100vh-3.5rem)] bg-gray-900 text-white flex flex-col shadow-lg z-40">
         <ul class="flex-1">
             <li>
-                <a href="/dashboard" class="block py-3 px-6 hover:bg-gray-700">🏠 ダッシュボード</a>
+                <a href="/dashboard/dashboard" class="block py-3 px-6 hover:bg-gray-700">🏠 ダッシュボード</a>
             </li>
             <li>
-                <a href="/check-shift" class="block py-3 px-6 hover:bg-gray-700">🏠 シフトの確認</a>
+                <a href="/shift/check-shift" class="block py-3 px-6 hover:bg-gray-700">🏠 シフトの確認</a>
             </li>
             <li>
-                <a href="/shift-sub" class="block py-3 px-6 hover:bg-gray-700">🏠 シフトの提出</a>
+                <a href="/shift/shift-sub" class="block py-3 px-6 hover:bg-gray-700">🏠 シフトの提出</a>
             </li>
             <li>
-                <a href="/manage-student" class="block py-3 px-6 hover:bg-gray-700">🏠 生徒管理</a>
+                <a href="/student/" class="block py-3 px-6 hover:bg-gray-700">🏠 生徒管理</a>
             </li>
             <li>
-                <a href="/manage-classroom" class="block py-3 px-6 hover:bg-gray-700">🏠 教室管理</a>
+                <a href="/classroom/schedule" class="block py-3 px-6 hover:bg-gray-700">🏠 教室管理</a>
             </li>
             <li>
                 <a href="/settings" class="block py-3 px-6 hover:bg-gray-700">🏠 授業報告</a>
             </li>
             <li>
-                <a href="/chatbot" class="block py-3 px-6 hover:bg-gray-700">📄 運営用AIエージェント</a>
+                <a href="/chatbot/chatbot" class="block py-3 px-6 hover:bg-gray-700">📄 運営用AIエージェント</a>
             </li>
             <li>
-                <a href="/chatbot" class="block py-3 px-6 hover:bg-gray-700">📄 指導用AIエージェント</a>
+                <a href="/chatbot/chatbot" class="block py-3 px-6 hover:bg-gray-700">📄 指導用AIエージェント</a>
             </li>
             <li>
                 <a href="/settings" class="block py-3 px-6 hover:bg-gray-700">⚙ 設定</a>
             </li>
         </ul>
-
-        <!-- ログアウトボタン -->
         <div class="border-t border-gray-700 p-4">
-            <a href="/" class="block py-2 px-6 bg-red-600 hover:bg-red-500 text-center rounded-md">
+            <a href="{{ url_for('auth.logout') }}" class="block py-2 px-6 bg-red-600 hover:bg-red-500 text-center rounded-md">
                 🚪 ログアウト
             </a>
         </div>

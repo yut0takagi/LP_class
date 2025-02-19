@@ -8,7 +8,7 @@ bp = Blueprint("chatbot", __name__)
  
 @bp.route('/chatbot')
 def chat_bot():
-    return render_template("dx_app/chatbot.html",data=make_dict("chatbot"))
+    return render_template("chatbot/chatbot.html",data=make_dict("chatbot"))
 
 @bp.route("/chat", methods=["POST"])
 def chat():

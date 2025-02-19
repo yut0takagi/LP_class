@@ -1,6 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_required, current_user
 import datetime
 from utils import make_dict
+from dx_app import db
+from dx_app.models.shift import ShiftPossib
+
 
 
 #後日DataBaseと紐付ける----------------------------------------------------------------
@@ -18,15 +22,12 @@ period_list = ["1限", "2限", "3限", "4限", "5限"]
 
 #-----------------------------------------------------------------------------------
 
-
-
-
 bp = Blueprint("shift", __name__)
 
 
 @bp.route('/shift-sub')
 def shift():
-    return render_template("dx_app/shift-sub.html",data=make_dict("shift-sub"))
+    return render_template("shift/shift-sub.html",data=make_dict("shift-sub"))
 
 
 
@@ -37,7 +38,7 @@ def check_shift():
     current_month = datetime.datetime.now().month
 
     # 過去3ヶ月～未来3ヶ月を選択可能
-    global available_months
+    available_months=[]
     for i in range(-3, 4):
         new_month = (current_month + i) % 12
         new_year = current_year + (current_month + i - 1) // 12
@@ -48,7 +49,7 @@ def check_shift():
 
     calendar = generate_calendar(current_year, current_month)
 
-    return render_template("dx_app/check-shift.html", data={
+    return render_template("shift/check-shift.html", data={
         "title": "シフト確認",
         "calendar": calendar,
         "available_months": available_months,
@@ -84,7 +85,7 @@ def get_calendar():
     calendar = generate_calendar(year, month)
 
     # 修正: `data` に `title`, `available_months` などを追加
-    return render_template("dx_app/check-shift.html", data={
+    return render_template("shift/check-shift.html", data={
         "title": "シフト確認",
         "calendar": calendar,
         "available_months": available_months,
@@ -95,17 +96,28 @@ def get_calendar():
 
 
 @bp.route("/submit_shift", methods=["POST"])
+@login_required
 def submit_shift():
-    submitted_shifts = {}
-    for period in period_list:
-        for date in date_list:
-            key = f"shift_{period}_{date}"
-            value = request.form.get(key, "未選択")
-            submitted_shifts[key] = value
+    submitted_shifts = []
+    for key, value in request.form.items():
+        if key.startswith("shift_"):
+            period, date_str = key.replace("shift_", "").split("_")
+            date = datetime.strptime(date_str, "%Y-%m-%d").date()  # YYYY-MM-DD形式を日付型に変換
 
-    # ここでデータベースに保存する処理を追加可能（例: SQLite, MySQL）
-    print("提出されたシフト:", submitted_shifts)
+            # 既存のデータがある場合は削除して上書き
+            existing_shift = ShiftPossib.query.filter_by(teacher_id=current_user.id, date=date, period=period).first()
+            if existing_shift:
+                db.session.delete(existing_shift)
 
-    return redirect(url_for("shift"))
-
-
+            # 新しいシフトデータを追加
+            new_shift = ShiftPossib(
+                teacher_id=current_user.id,
+                date=date,
+                period=period,
+                status=value
+            )
+            db.session.add(new_shift)
+            submitted_shifts.append(new_shift)
+    db.session.commit()
+    flash("シフトが提出されました！", "success")
+    return redirect(url_for("shift.submit_shift"))

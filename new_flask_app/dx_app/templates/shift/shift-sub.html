@@ -1,8 +1,9 @@
 {% extends "layoutForLogined.html" %}
 {% block content %}
     <h2 class="text-3xl font-bold text-gray-800">📅 シフト提出</h2>
-
-    <form action="{{ url_for('submit_shift') }}" method="POST" class="mt-6 bg-white p-6 shadow-md rounded-lg">
+    <form action="{{ url_for('shift.submit_shift') }}" method="POST" class="mt-6 bg-white p-6 shadow-md rounded-lg">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+         <!-- CSRFトークンを追加 -->
         <div class="relative overflow-x-auto">
             <div class="flex">
                 <!-- 固定される時限（左列） -->

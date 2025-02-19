@@ -12,14 +12,14 @@ students = [
 @bp.route("/")
 def manage_student():
     teachers = list(set([s["teacher"] for s in students]))
-    return render_template("dx_app/manage-student.html", data={"students": students, "teachers": teachers})
+    return render_template("student/manage-student.html", data={"students": students, "teachers": teachers})
 
 @bp.route("/<int:student_id>")
 def student_detail(student_id):
     student = next((s for s in students if s["id"] == student_id), None)
     if not student:
         return "生徒が見つかりません", 404
-    return render_template("dx_app/student-detail.html", student=student)
+    return render_template("student/student-detail.html", student=student)
 
 @bp.route("/<int:student_id>/update", methods=["POST"])
 def update_student(student_id):

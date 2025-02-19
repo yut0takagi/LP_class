@@ -15,6 +15,7 @@ tqdm = "==4.66.5"
 flask-login = "*"
 openai = "*"
 python-dotenv = "*"
+email-validator = "*"
 
 [dev-packages]
 
