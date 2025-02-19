@@ -1,85 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_all.css') }}"/>
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script defer  src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>{{ data["title"] }}</title>
-    {% if data["login"] == True %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
-    {% endif %}
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #C5BAFF;" aria-label="トップナビゲーション">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">個別指導塾の業務効率化ツール</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    他のツールはこちら
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">学生専用 学習支援ツール</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">お問い合わせ</a>
-                </li>
-                </ul>
-                <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
+<body class="bg-gray-100 flex">
+
+    <!-- 上部ナビバー -->
+    <header class="fixed top-0 left-0 w-full h-14 bg-blue-800 text-white flex items-center px-6 shadow-md z-50">
+        <h1 class="text-lg font-bold">ForEducator</h1>
+        <nav class="ml-auto">
+            <a href="/" class="px-4 py-2 hover:bg-blue-700 rounded-md">🏠 ホーム</a>
+            <a href="#" class="px-4 py-2 hover:bg-blue-700 rounded-md">📄 個人情報の編集</a>
+            <a href="#" class="px-4 py-2 hover:bg-blue-700 rounded-md">📞 お問い合わせ</a>
+        </nav>
+    </header>
+
+    <!-- 左サイドナビバー -->
+    <nav class="fixed top-14 left-0 w-64 h-[calc(100vh-3.5rem)] bg-gray-900 text-white flex flex-col shadow-lg z-40">
+        <ul class="flex-1">
+            <li>
+                <a href="/dashboard" class="block py-3 px-6 hover:bg-gray-700">🏠 ダッシュボード</a>
+            </li>
+            <li>
+                <a href="/check-shift" class="block py-3 px-6 hover:bg-gray-700">🏠 シフトの確認</a>
+            </li>
+            <li>
+                <a href="/shift-sub" class="block py-3 px-6 hover:bg-gray-700">🏠 シフトの提出</a>
+            </li>
+            <li>
+                <a href="/manage-student" class="block py-3 px-6 hover:bg-gray-700">🏠 生徒管理</a>
+            </li>
+            <li>
+                <a href="/manage-classroom" class="block py-3 px-6 hover:bg-gray-700">🏠 教室管理</a>
+            </li>
+            <li>
+                <a href="/settings" class="block py-3 px-6 hover:bg-gray-700">🏠 授業報告</a>
+            </li>
+            <li>
+                <a href="/chatbot" class="block py-3 px-6 hover:bg-gray-700">📄 運営用AIエージェント</a>
+            </li>
+            <li>
+                <a href="/chatbot" class="block py-3 px-6 hover:bg-gray-700">📄 指導用AIエージェント</a>
+            </li>
+            <li>
+                <a href="/settings" class="block py-3 px-6 hover:bg-gray-700">⚙ 設定</a>
+            </li>
+        </ul>
+
+        <!-- ログアウトボタン -->
+        <div class="border-t border-gray-700 p-4">
+            <a href="/" class="block py-2 px-6 bg-red-600 hover:bg-red-500 text-center rounded-md">
+                🚪 ログアウト
+            </a>
         </div>
     </nav>
-    <main>
+
+    <!-- メインコンテンツ -->
+    <main class="ml-64 mt-14 p-8 w-[calc(100%-16rem)] ml-64">
         {% block content %}
-            {% if data["login"] == True %}
-                <div class="container-fluid">
-                    <div class="row">
-                        <!-- 左側の固定タブバー -->
-                        <div class="col-2 position-fixed d-flex flex-column justify-content-between" style="background-color: #E8F9FF; height: 100vh; padding: 1rem;">
-                            <nav class="nav flex-column" aria-label="サイドメニュー">
-                                <a class="nav-link mb-2" aria-current="page" href="/dashboard">ダッシュボード</a>
-                                <a class="nav-link mb-2 active" href="/edit-profile">個人情報の編集</a>
-                                <a class="nav-link mb-2" href="/work-schedule-submit">シフトの提出</a>
-                                <a class="nav-link mb-2" href="/work-schedule-check">シフトの確認</a>
-                                <a class="nav-link mb-2" href="/manage-students">生徒管理</a>
-                                <a class="nav-link mb-2" href="/ai-agent">AIエージェント</a>
-                                <a class="nav-link mb-2" href="/line-connect">LINE連携について</a>
-                                <a class="nav-link mb-2" href="/manage-class">教室管理</a>
-                            </nav>
-                            <!-- ログアウトボタン -->
-                            <div class="mt-auto">
-                                <a class="nav-link text-danger" href="#">ログアウト</a>
-                            </div>
-                        </div>
-                        <!-- メインコンテンツ -->
-                        <div class="col offset-2" style="background-color: #C4D9FF; min-height: 100vh;">
-                            <!--ここにログイン後のコンテンツを記述-->
-                        </div>
-                    </div>
-                </div>
-            {% else %}
-                <h1 class="visually-hidden">{{ data["title"] }}</h1>
-                <!--ここに未ログイン時のコンテンツを記述-->
-            {% endif %}
         {% endblock %}
     </main>
+
 </body>
 </html>
+
+
