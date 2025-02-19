@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>{% block title %}シンプルなホームページ作成{% endblock %}</title>
+    <title>{% block title %}Practista{% endblock %}</title>
 </head>
 <body class="bg-gradient-to-b from-blue-700 to-blue-900 text-white min-h-screen flex flex-col">
 
     <!-- 🔹 固定ナビゲーションバー -->
     <nav class="fixed top-0 left-0 w-full z-50 bg-blue-800 shadow-md py-4 px-6 flex justify-between items-center">
-        <h1 class="text-2xl font-bold">LOGO</h1>
+        <h1 class="text-2xl font-bold">Practista</h1>
         <div class="space-x-4">
             <a href="{{ url_for('misc.homepage') }}" class="hover:underline">ホーム</a>
             <a href="#" class="hover:underline">プロダクト</a>
@@ -31,7 +31,7 @@
 
     <!-- フッター -->
     <footer class="py-4 text-center text-sm bg-blue-800 w-full">
-        © 2025 シンプルホームページ作成
+        © 2025 Practista. All rights reserved.
     </footer>
 
 </body>

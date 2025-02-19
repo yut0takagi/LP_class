@@ -3,6 +3,10 @@ AI-Agent/
 logs/
 *.log
 
+# データについて
+instance/
+migrations/
+
 # macOSの不要ファイル
 .DS_Store
 
