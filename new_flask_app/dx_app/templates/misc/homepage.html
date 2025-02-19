@@ -1,10 +1,23 @@
 {% extends "layoutForBeforeLogin.html" %}
+
+{% block title %}ホームページ{% endblock %}
+
 {% block content %}
-<br>
-<div class="container">
-    <h1>homepage.html表示してます</h1>
-    <p>後日編集します。</p>
-    <a href="/login">ログイン画面へ</a>
-    <a href="/dashboard">ダッシュボードへ</a><strong>※後日削除</strong>
+<h2 class="text-4xl font-bold mb-4">誰でも気軽にシンプルに<br>ホームページ作成</h2>
+<p class="text-lg mb-6">どんなホームページを作成しますか？</p>
+
+<!-- カテゴリーボタン -->
+<div class="grid grid-cols-3 gap-4">
+    <button class="px-6 py-3 bg-white text-blue-800 rounded-full shadow-lg hover:bg-gray-200">サービス業</button>
+    <button class="px-6 py-3 bg-white text-blue-800 rounded-full shadow-lg hover:bg-gray-200">ポートフォリオ</button>
+    <button class="px-6 py-3 bg-white text-blue-800 rounded-full shadow-lg hover:bg-gray-200">ブログ</button>
+    <button class="px-6 py-3 bg-white text-blue-800 rounded-full shadow-lg hover:bg-gray-200">ネットショップ</button>
+    <button class="px-6 py-3 bg-white text-blue-800 rounded-full shadow-lg hover:bg-gray-200">イベント</button>
+    <button class="px-6 py-3 bg-white text-blue-800 rounded-full shadow-lg hover:bg-gray-200">コンサルタント</button>
 </div>
+
+<!-- CTAボタン -->
+<button class="mt-8 px-8 py-4 bg-white text-blue-800 text-lg font-semibold rounded-full shadow-lg hover:bg-gray-200">
+    無料ではじめる
+</button>
 {% endblock %}

@@ -7,4 +7,3 @@ dashboard_bp = Blueprint("dashboard", __name__)
 chatbot_bp = Blueprint("chatbot", __name__)
 setting_bp = Blueprint("setting", __name__)
 misc_bp = Blueprint("misc", __name__)
-

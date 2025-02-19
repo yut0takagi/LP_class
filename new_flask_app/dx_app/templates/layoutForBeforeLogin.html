@@ -4,67 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>{{ data["title"] }}</title>
+    <title>{% block title %}シンプルなホームページ作成{% endblock %}</title>
 </head>
-<body class="bg-gray-100 flex">
+<body class="bg-gradient-to-b from-blue-700 to-blue-900 text-white min-h-screen flex flex-col">
 
-    <!-- 上部ナビバー -->
-    <header class="fixed top-0 left-0 w-full h-14 bg-blue-800 text-white flex items-center px-6 shadow-md z-50">
-        <h1 class="text-lg font-bold">ForEducator</h1>
-        <nav class="ml-auto">
-            <a href="/" class="px-4 py-2 hover:bg-blue-700 rounded-md">🏠 ホーム</a>
-            <a href="#" class="px-4 py-2 hover:bg-blue-700 rounded-md">📄 個人情報の編集</a>
-            <a href="#" class="px-4 py-2 hover:bg-blue-700 rounded-md">📞 お問い合わせ</a>
-        </nav>
-    </header>
-
-    <!-- 左サイドナビバー -->
-    <nav class="fixed top-14 left-0 w-64 h-[calc(100vh-3.5rem)] bg-gray-900 text-white flex flex-col shadow-lg z-40">
-        <ul class="flex-1">
-            <li>
-                <a href="/dashboard" class="block py-3 px-6 hover:bg-gray-700">🏠 ダッシュボード</a>
-            </li>
-            <li>
-                <a href="/check-shift" class="block py-3 px-6 hover:bg-gray-700">🏠 シフトの確認</a>
-            </li>
-            <li>
-                <a href="/shift-sub" class="block py-3 px-6 hover:bg-gray-700">🏠 シフトの提出</a>
-            </li>
-            <li>
-                <a href="/manage-student" class="block py-3 px-6 hover:bg-gray-700">🏠 生徒管理</a>
-            </li>
-            <li>
-                <a href="/manage-classroom" class="block py-3 px-6 hover:bg-gray-700">🏠 教室管理</a>
-            </li>
-            <li>
-                <a href="/settings" class="block py-3 px-6 hover:bg-gray-700">🏠 授業報告</a>
-            </li>
-            <li>
-                <a href="/chatbot" class="block py-3 px-6 hover:bg-gray-700">📄 運営用AIエージェント</a>
-            </li>
-            <li>
-                <a href="/chatbot" class="block py-3 px-6 hover:bg-gray-700">📄 指導用AIエージェント</a>
-            </li>
-            <li>
-                <a href="/settings" class="block py-3 px-6 hover:bg-gray-700">⚙ 設定</a>
-            </li>
-        </ul>
-
-        <!-- ログアウトボタン -->
-        <div class="border-t border-gray-700 p-4">
-            <a href="/" class="block py-2 px-6 bg-red-600 hover:bg-red-500 text-center rounded-md">
-                🚪 ログアウト
+    <!-- 🔹 固定ナビゲーションバー -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-blue-800 shadow-md py-4 px-6 flex justify-between items-center">
+        <h1 class="text-2xl font-bold">LOGO</h1>
+        <div class="space-x-4">
+            <a href="{{ url_for('misc.homepage') }}" class="hover:underline">ホーム</a>
+            <a href="#" class="hover:underline">プロダクト</a>
+            <a href="#" class="hover:underline">ソリューション</a>
+            <a href="#" class="hover:underline">リソース</a>
+            <a href="#" class="hover:underline">プラン</a>
+            <a href="{{ url_for('auth.login') }}" class="bg-white text-blue-800 px-4 py-2 rounded-md hover:bg-gray-200">
+                ログイン / 新規登録
             </a>
         </div>
     </nav>
 
-    <!-- メインコンテンツ -->
-    <main class="ml-64 mt-14 p-8 w-[calc(100%-16rem)] ml-64">
+    <!-- 🔹 メインコンテンツ（ナビバーの高さを考慮） -->
+    <main class="flex-1 flex flex-col items-center text-center mt-20"> <!-- mt-20 でナビバーの高さ分を確保 -->
         {% block content %}
         {% endblock %}
     </main>
 
+    <!-- フッター -->
+    <footer class="py-4 text-center text-sm bg-blue-800 w-full">
+        © 2025 シンプルホームページ作成
+    </footer>
+
 </body>
 </html>
-
-

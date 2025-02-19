@@ -28,13 +28,15 @@ def create_app():
     from dx_app.views.shift import bp as shift_bp
     from dx_app.views.student import bp as student_bp
     from dx_app.views.chatbot import bp as chatbot_bp
+    from dx_app.views.misc import bp as misc_bp
+
 
     app.register_blueprint(auth_bp, url_prefix="/auth")
     app.register_blueprint(dashboard_bp, url_prefix="/dashboard")
     app.register_blueprint(shift_bp, url_prefix="/shift")
     app.register_blueprint(student_bp, url_prefix="/student")
     app.register_blueprint(chatbot_bp, url_prefix="/chatbot")
-
+    app.register_blueprint(misc_bp, url_prefix="")
     return app
 
 @login_manager.user_loader

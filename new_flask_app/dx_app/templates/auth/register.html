@@ -1,0 +1,53 @@
+{% extends "layoutForBeforeLogin.html" %}
+
+{% block title %}新規登録{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center w-full max-w-6xl mx-auto bg-white text-gray-800 p-8 rounded-lg shadow-lg mt-10">
+    <h2 class="text-2xl font-bold text-center mb-4">新規登録</h2>
+
+    <form action="{{ url_for('auth.register') }}" method="POST" class="w-full">
+        {{ form.hidden_tag() }}  <!-- CSRF対策 -->
+    
+        <!-- 生徒ID -->
+        <div class="mb-4">
+            {{ form.student_id.label(class="block text-sm font-medium") }}
+            {{ form.student_id(class="w-full p-2 border border-gray-300 rounded mt-1 focus:ring-2 focus:ring-blue-500 focus:outline-none") }}
+        </div>
+    
+        <!-- メールアドレス -->
+        <div class="mb-4">
+            {{ form.email.label(class="block text-sm font-medium") }}
+            {{ form.email(class="w-full p-2 border border-gray-300 rounded mt-1 focus:ring-2 focus:ring-blue-500 focus:outline-none") }}
+        </div>
+    
+        <!-- 電話番号 -->
+        <div class="mb-4">
+            {{ form.phone.label(class="block text-sm font-medium") }}
+            {{ form.phone(class="w-full p-2 border border-gray-300 rounded mt-1 focus:ring-2 focus:ring-blue-500 focus:outline-none") }}
+        </div>
+        <!-- パスワード -->
+        <div class="mb-4">
+            {{ form.password.label(class="block text-sm font-medium") }}
+            {{ form.password(class="w-full p-2 border border-gray-300 rounded mt-1 focus:ring-2 focus:ring-blue-500 focus:outline-none") }}
+        </div>
+    
+        <!-- パスワード（確認用） -->
+        <div class="mb-4">
+            {{ form.confirm_password.label(class="block text-sm font-medium") }}
+            {{ form.confirm_password(class="w-full p-2 border border-gray-300 rounded mt-1 focus:ring-2 focus:ring-blue-500 focus:outline-none") }}
+        </div>
+    
+        <!-- 登録ボタン -->
+        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
+            登録
+        </button>
+    </form>
+
+    <!-- ログインページへのリンク -->
+    <p class="text-sm text-center mt-4">
+        すでにアカウントをお持ちですか？
+        <a href="{{ url_for('auth.login') }}" class="text-blue-500 hover:underline">ログイン</a>
+    </p>
+</div>
+{% endblock %}
