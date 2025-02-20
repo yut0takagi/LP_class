@@ -1,8 +1,64 @@
-{% extends "layoutForBeforeLogin.html" %}
+{% extends "layoutForLogined.html" %}
+
 {% block content %}
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md mt-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+        👤 個人情報編集
+    </h2>
 
+    <!-- フラッシュメッセージ -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="bg-{{ 'red' if category == 'warning' else 'green' }}-100 border border-{{ 'red' if category == 'warning' else 'green' }}-400 text-{{ 'red' if category == 'warning' else 'green' }}-700 px-4 py-3 rounded relative mb-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
+    <form method="POST" class="space-y-4">
+        <div>
+            <label for="name" class="block font-semibold text-gray-700">名前</label>
+            <input type="text" id="name" name="name" value="{{ staff.name }}" required class="w-full border border-gray-300 p-2 rounded mt-1">
+        </div>
+        
+        <div>
+            <label for="email" class="block font-semibold text-gray-700">メールアドレス</label>
+            <input type="email" id="email" name="email" value="{{ staff.email }}" required class="w-full border border-gray-300 p-2 rounded mt-1">
+        </div>
 
+        <div>
+            <label for="position" class="block font-semibold text-gray-700">役職</label>
+            <input type="text" id="position" name="position" value="{{ staff.position }}" required class="w-full border border-gray-300 p-2 rounded mt-1">
+        </div>
 
+        <div>
+            <label for="password" class="block font-semibold text-gray-700">パスワード (変更時のみ入力)</label>
+            <input type="password" id="password" name="password" class="w-full border border-gray-300 p-2 rounded mt-1">
+        </div>
 
+        <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+            更新する
+        </button>
+    </form>
+</div>
+<script>
+    document.querySelector("form").addEventListener("submit", function(event) {
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let position = document.getElementById("position").value.trim();
+        let password = document.getElementById("password").value.trim();
+    
+        if (name === "" || email === "" || position === "") {
+            alert("すべての必須項目を入力してください。");
+            event.preventDefault();
+        }
+    
+        if (password.length > 0 && password.length < 6) {
+            alert("パスワードは6文字以上にしてください。");
+            event.preventDefault();
+        }
+    });
+    </script>
 {% endblock %}
