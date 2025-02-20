@@ -11,7 +11,7 @@
 
 <!-- スケジュール表 -->
 <form id="scheduleForm" action="{{ url_for('classroom.submit_schedule') }}" method="POST">
-    {{ csrf_token() }}  <!-- CSRF対策 -->
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> <!-- CSRF対策 -->
     <div class="relative overflow-x-auto mt-4">
         <table class="border-collapse border border-gray-300 w-full">
             <thead>
@@ -56,6 +56,43 @@
     <button type="submit" class="mt-6 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 w-full">
         確定
     </button>
+    <div class="mt-6 bg-white p-6 shadow-md rounded-lg">
+        <h3 class="text-xl font-bold mb-4">📅 シフト提出期間設定</h3>
+    
+        <form action="{{ url_for('classroom.manage_classroom') }}" method="POST">
+            <!-- シフト対象期間 -->
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium">シフト開始日:</label>
+                    <input type="date" name="start_date" value="{{ period.start_date if period else '' }}"
+                           class="border border-gray-300 px-4 py-2 rounded-md w-full">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">シフト終了日:</label>
+                    <input type="date" name="end_date" value="{{ period.end_date if period else '' }}"
+                           class="border border-gray-300 px-4 py-2 rounded-md w-full">
+                </div>
+            </div>
+    
+            <!-- シフト提出受付期間 -->
+            <div class="grid grid-cols-2 gap-4 mt-4">
+                <div>
+                    <label class="block text-sm font-medium">提出開始日:</label>
+                    <input type="date" name="submission_start" value="{{ period.submission_start if period else '' }}"
+                           class="border border-gray-300 px-4 py-2 rounded-md w-full">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">提出締切日:</label>
+                    <input type="date" name="submission_end" value="{{ period.submission_end if period else '' }}"
+                           class="border border-gray-300 px-4 py-2 rounded-md w-full">
+                </div>
+            </div>
+    
+            <button type="submit" class="mt-6 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 w-full">
+                更新する
+            </button>
+        </form>
+    </div>
 </form>
 
 <!-- JavaScript でボタン選択を管理 -->

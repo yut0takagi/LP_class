@@ -4,6 +4,7 @@ import datetime
 from utils import make_dict
 from dx_app import db
 from dx_app.models.shift import ShiftPossib
+from dx_app.models.shift import ShiftPeriod
 
 
 
@@ -93,31 +94,48 @@ def get_calendar():
         "current_month": month
     })
 
-
-
-@bp.route("/submit_shift", methods=["POST"])
+@bp.route("/submit_shift", methods=["GET","POST"])
 @login_required
 def submit_shift():
+    """ 教師のシフト提出処理 """
+    shift_period = ShiftPeriod.query.order_by(ShiftPeriod.id.desc()).first()
+
+    # シフト対象期間が設定されていない場合
+    if not shift_period:
+        flash("シフト対象期間が設定されていません。", "danger")
+        return redirect(url_for("shift.check_shift"))
+
     submitted_shifts = []
+
     for key, value in request.form.items():
-        if key.startswith("shift_"):
-            period, date_str = key.replace("shift_", "").split("_")
-            date = datetime.strptime(date_str, "%Y-%m-%d").date()  # YYYY-MM-DD形式を日付型に変換
+        # キーの形式: shift_1限_2025-02-20
+        try:
+            _, period, date_str = key.split("_")
+            date = datetime.strptime(date_str, "%Y-%m-%d").date()
+        except ValueError:
+            continue  # 無効なキーはスキップ
 
-            # 既存のデータがある場合は削除して上書き
-            existing_shift = ShiftPossib.query.filter_by(teacher_id=current_user.id, date=date, period=period).first()
-            if existing_shift:
-                db.session.delete(existing_shift)
+        # 設定されたシフト対象期間内でなければ無視
+        if not (shift_period.start_date <= date <= shift_period.end_date):
+            flash(f"{date} はシフト対象期間外です。", "warning")
+            continue
 
-            # 新しいシフトデータを追加
-            new_shift = ShiftPossib(
-                teacher_id=current_user.id,
-                date=date,
-                period=period,
-                status=value
-            )
-            db.session.add(new_shift)
-            submitted_shifts.append(new_shift)
+        # すでに存在するデータを削除し、新規保存
+        existing_shift = ShiftPossib.query.filter_by(
+            user_type="teacher", user_id=current_user.id, date=date, period=period
+        ).first()
+
+        if existing_shift:
+            db.session.delete(existing_shift)
+
+        new_shift = ShiftPossib(
+            user_type="teacher", user_id=current_user.id,
+            date=date, period=period, is_possible=(value == "○")
+        )
+        db.session.add(new_shift)
+        submitted_shifts.append(new_shift)
+
     db.session.commit()
-    flash("シフトが提出されました！", "success")
-    return redirect(url_for("shift.submit_shift"))
+
+    flash(f"{len(submitted_shifts)}件のシフトを提出しました！", "success")
+    return redirect(url_for("shift.check_shift"))
