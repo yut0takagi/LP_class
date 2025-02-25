@@ -3,6 +3,8 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from dx_app.models import db
 
+
+
 class User(db.Model, UserMixin):
     """
     Userテーブル
@@ -19,6 +21,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(255), nullable=False)
     role = db.Column(db.String(50), nullable=False, default="student")  # 追加: 役割（student, teacher, adminなど）
 
+
     def set_password(self, password):
         """
         引数のパスワードをハッシュ化してpassword_hashに格��する
@@ -32,6 +35,7 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
 
 # 生徒テーブル
+
 class Student(db.Model):
     """
     id(Integer): ユーザーID (Primary Key)->本サービスを利用するすべてのユーザーに配分(同一はないように分配する)
@@ -59,7 +63,7 @@ class Student(db.Model):
 # 教師テーブル
 class Teacher(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    organization = db.Column(db.String(100))
+    organization = db.Column(db.String(100),db.ForeignKey('Organization.name'), nullable=False)
     department = db.Column(db.String(100))
     hire_date = db.Column(db.Date, nullable=True)  # 追加: 勤務開始日
     permissions = db.Column(db.String(50), nullable=False, default="basic")  # 追加: 権限レベル
@@ -70,24 +74,12 @@ class Guardian(db.Model):
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=True)  # 追加: 連絡用メール
 
-# 来塾可能日（ShiftPossib）
-class ShiftPossib(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    date = db.Column(db.Date, nullable=False)
-    available = db.Column(db.Boolean, nullable=False)  # 可能か不可か（True = 可能, False = 不可）
 
-# シフト完成版（ShiftComp）
-class ShiftComp(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, nullable=False)
-    time = db.Column(db.Time, nullable=False)
-    booth = db.Column(db.String(20), nullable=False)  # 教室番号
-    lesson_id = db.Column(db.Integer, db.ForeignKey('lesson.id'), nullable=False)  # 授業割り当てナンバー
 
 # 受講科目 / 指導科目（SubjectPossib）
-class SubjectPossib(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    subject = db.Column(db.String(50), nullable=False)
-    available = db.Column(db.Boolean, nullable=False)  # 可能か不可か（True = 可能, False = 不可）
+
+
+
+
+
+

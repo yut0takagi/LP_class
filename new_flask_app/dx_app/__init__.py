@@ -4,8 +4,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 import os
-from dx_app.models import db  # models の db をインポート
-from dx_app.models.user import User
+from dx_app.models import db, User
 
 migrate = Migrate()
 csrf = CSRFProtect()
