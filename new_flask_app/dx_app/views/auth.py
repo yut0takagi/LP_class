@@ -4,6 +4,7 @@ from utils import make_dict
 from dx_app.forms import LoginForm, RegisterForm
 from dx_app.models.user import User
 from dx_app import db
+import uuid
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
@@ -11,12 +12,17 @@ bp = Blueprint("auth", __name__, url_prefix="/auth")
 @bp.route("/register", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
+    
+    if request.method == "GET":
+        form.id.data = str(uuid.uuid4())  # UUID を生成してセット
+
 
     if form.validate_on_submit():  # フォームのバリデーションが成功した場合
+        id = form.id.data
         name = form.name.data
         email = form.email.data
         password = form.password.data
-        user_type = form.user_type.data
+        role = form.user_type.data
 
         # 既に登録されているメールアドレスかチェック
         existing_user = User.query.filter_by(email=email).first()
@@ -28,7 +34,7 @@ def register():
         new_user = User(
             name=name,
             email=email,
-            user_type=user_type
+            role=role
         )
         new_user.set_password(password)  # ハッシュ化
         db.session.add(new_user)
@@ -53,8 +59,12 @@ def login():
 
     return render_template("auth/login.html", form=form, data=make_dict("login"))
 
+@bp.route("/make-account", methods=["POST","GET"])
+def make_account():
+    return render_template("auth/make_account.html")
 
-@bp.route("/logout", methods=["GET"])
+
+@bp.route("/logout")
 @login_required
 def logout():
     logout_user()
