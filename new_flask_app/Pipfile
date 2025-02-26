@@ -19,5 +19,9 @@ openai = "*"
 python-dotenv = "*"
 email-validator = "*"
 flask-sqlalchemy = "*"
+pyrebase = "*"
+urllib3 = "*"
+requests = "*"
+pyrebase4 = "*"
 
 [dev-packages]

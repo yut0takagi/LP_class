@@ -44,3 +44,7 @@ dist/
 # FLASK関連
 chat_history.json
 error.log
+new_flask_app/dx_app/firebaseConfig.json
+
+#firebase関連
+firebaseConfig.json
