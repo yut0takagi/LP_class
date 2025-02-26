@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>{% block title %}Practista{% endblock %}</title>
+    <title>{% block title %}Practista For All Students{% endblock %}</title>
+    <style>
+        body{
+            background-color: rgb(30 64 175);
+        }
+    </style>
 </head>
 <body class="bg-gradient-to-b from-blue-700 to-blue-900 text-white min-h-screen flex flex-col">
 
@@ -22,7 +27,6 @@
             </a>
         </div>
     </nav>
-
     <!-- 🔹 メインコンテンツ（ナビバーの高さを考慮） -->
     <main class="flex-1 flex flex-col items-center text-center mt-20"> <!-- mt-20 でナビバーの高さ分を確保 -->
         {% block content %}

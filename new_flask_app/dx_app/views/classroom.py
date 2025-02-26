@@ -1,8 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from datetime import datetime, timedelta
 from dx_app import db
-from dx_app.models.shift import ShiftPossib
-from dx_app.models.shift import ShiftPeriod
+from dx_app.models.shift import ShiftPossib,ShiftSubmission, ShiftComp
 from utils import make_dict
 
 bp = Blueprint("classroom", __name__)
