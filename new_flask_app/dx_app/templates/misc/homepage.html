@@ -3,15 +3,249 @@
 {% block title %}ホームページ{% endblock %}
 
 {% block content %}
-<div class="flex flex-col items-center justify-center w-full max-w-4xl mx-auto bg-white text-gray-800 p-8 rounded-lg shadow-lg mt-10">
-    <h2 class="text-4xl font-bold mb-4">塾に通っていても&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通っていなくても<br>誰もが利用できる学習サポートシステム</h2>
-    <p class="text-lg mb-6">「つまづく」がなくなる学習アプリ</p>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    body {
+    font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    /* タイトルのフォント */
+    h1, h2, h3,p {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+    }
+
+    /* ボタンのフォント */
+    button {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+    }
+    /* セクションごとに余白を増やす */
+    section {
+        margin: 80px auto;
+        padding: 40px;
+        max-width: 80%;
+    }
+
+    /* カードデザインを統一 */
+    .card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    /* グリッドの間隔を広げる */
+    .grid {
+        display: grid;
+        gap: 32px;
+    }
+
+    /* 3列レイアウト（PC） */
+    @media (min-width: 768px) {
+        .grid-cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    /* スクロール時にフェードイン */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    /* ✅ 特徴カードのデザイン */
+.feature-card {
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ホバー時に少し浮かせる */
+.feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* ✅ アイコン or 写真 */
+.feature-image {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin: 0 auto 12px;
+    filter: drop-shadow(0 4px 8px rgba(255, 255, 255, 0.3));
+}
+/* ✅ FAQ 全体のデザイン */
+.faq {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ✅ 質問のデザイン */
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+/* ✅ 開閉アイコン */
+.toggle-icon {
+    font-size: 24px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* ✅ 回答のデザイン */
+.faq-answer {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 16px;
+    margin-top: 10px;
+    border-radius: 8px;
+    color: #333;
+    font-size: 18px;
+    line-height: 1.7;
+    display: none;
+}
+
+/* ✅ アコーディオン開閉時のスタイル */
+details[open] .faq-answer {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+details[open] .toggle-icon {
+    transform: rotate(45deg);
+}
+
+/* ✅ フェードインアニメーション */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+
+<!-- ✅ ヒーローセクション -->
+<div class="text-center mt-20 p-10">
+    <h1 class="text-5xl font-bold text-white leading-tight">塾に通っていても、通っていなくても</h1>
+    <h2 class="text-3xl text-gray-300 mt-4">誰もが利用できる学習サポートシステム</h2>
+    <p class="text-lg mt-6 text-white">「つまづく」がなくなる学習アプリ 🎉</p>
+    <p class="text-lg font-semibold text-yellow-300 mt-2">リリースまであと5日!!</p>
     
-    <!-- CTAボタン -->
-    <button class="mt-8 px-8 py-4 bg-blue-100 text-blue-800 text-lg font-semibold rounded-full shadow-lg hover:bg-gray-200">
+    <button class="mt-6 px-8 py-4 bg-white text-blue-800 text-lg font-semibold rounded-full shadow-lg hover:bg-gray-200">
         今すぐ無料ではじめる
     </button>
 </div>
 
+<!-- ✅ なぜ Practista なのか？ -->
+<section class="fade-in text-center mt-20">
+    <h3 class="text-5xl font-bold text-white relative inline-block">
+        なぜ Practista なのか？
+        <span class="block text-lg text-blue-300">Why Practista?</span>
+        <span class="absolute left-1/2 bottom-0 w-24 h-1 bg-yellow-400 transform -translate-x-1/2"></span>
+    </h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10 max-w-6xl mx-auto">
+        <!-- 🎯 AIが学習サポート -->
+        <div class="feature-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/3408/3408581.png" alt="AI Learning" class="feature-image">
+            <h4 class="text-xl font-bold text-white mt-4">AIが学習サポート</h4>
+            <p class="text-gray-300">AIが進捗を分析し、最適な学習プランを提案。</p>
+        </div>
+        
+        <!-- 🎯 個別指導のような体験 -->
+        <div class="feature-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Tutoring" class="feature-image">
+            <h4 class="text-xl font-bold text-white mt-4">個別指導のような体験</h4>
+            <p class="text-gray-300">専門家レベルのサポートであなたに最適な学習プランを生成。</p>
+        </div>
+        
+        <!-- 🎯 どこでも学習可能 -->
+        <div class="feature-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/3189/3189957.png" alt="Mobile Learning" class="feature-image">
+            <h4 class="text-xl font-bold text-white mt-4">どこでも学習可能</h4>
+            <p class="text-gray-300">スマホ・PC・タブレットでいつでもどこでも学習可能。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ✅ よくある質問（FAQ） -->
+<section class="fade-in mt-16">
+    <h3 class="text-4xl font-bold text-center text-white mb-8">よくある質問</h3>
+    <div class="flex flex-col items-center gap-6">
+        <div class="bg-white bg-opacity-95 p-8 rounded-lg shadow-lg w-full max-w-6xl">
+            <details class="group">
+                <summary class="faq-question">
+                    <span class="text-xl font-bold text-gray-900">❓ Practista は無料ですか？</span>
+                    <span class="toggle-icon">➕</span>
+                </summary>
+                <p class="faq-answer">✅ はい、基本機能は無料で利用できます！</p>
+            </details>
+        </div>
+        
+        <div class="bg-white bg-opacity-95 p-8 rounded-lg shadow-lg w-full max-w-6xl">
+            <details class="group">
+                <summary class="faq-question">
+                    <span class="text-xl font-bold text-gray-900">📚 どんな教科に対応していますか？</span>
+                    <span class="toggle-icon">➕</span>
+                </summary>
+                <p class="faq-answer">✅ 数学・英語・理科・社会・国語に対応しています。</p>
+            </details>
+        </div>
+
+        <div class="bg-white bg-opacity-95 p-8 rounded-lg shadow-lg w-full max-w-4xl">
+            <details class="group">
+                <summary class="faq-question">
+                    <span class="text-xl font-bold text-gray-900">💻 スマホやタブレットでも使えますか？</span>
+                    <span class="toggle-icon">➕</span>
+                </summary>
+                <p class="faq-answer">✅ はい、スマホ・タブレット・PCで利用可能です！</p>
+            </details>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    // スクロール時に要素をフェードインさせる
+    document.addEventListener("DOMContentLoaded", function () {
+        const fadeIns = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.3 });
+
+        fadeIns.forEach(section => observer.observe(section));
+    });
+</script>
 
 {% endblock %}

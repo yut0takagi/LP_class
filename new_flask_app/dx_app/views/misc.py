@@ -20,3 +20,7 @@ def settings():
 # エラーについての処理
 def page_not_found(e):
     return render_template("errors/404.html"), 404
+
+@bp.errorhandler(400)
+def bad_request_handler(error):
+    return render_template("errors/404.html"), 400

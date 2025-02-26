@@ -1,5 +1,5 @@
 
-def make_dict(pagename):
+def make_dict(pagename, form=None, progress=None):
     '''
     引数で与えられたページ名に応じた辞書を返す
     dict={title:"ページタイトル"}
@@ -9,7 +9,7 @@ def make_dict(pagename):
     dict={}
     titles={
         "login":"ログイン",
-        "make-account":"アカウントの新規作成",
+        "register":"アカウントの新規作成",
         "dashboard":"ダッシュボード",
         "edit-profile":"プロフィール編集",
         "chatbot":"教室運営用AIエージェント",
@@ -21,6 +21,14 @@ def make_dict(pagename):
         dict["title"] = titles[pagename]
     except:
         dict["title"] = "ページが見つかりません"
+    try:
+        dict["form"] = form
+    except:
+        dict["form"] = None
+    try:
+        dict["progress"] = progress
+    except:
+        dict["progress"] = None
     try:
         dict["data"]=[staff_list,date_list, period_list,weekday_list]
     except:
