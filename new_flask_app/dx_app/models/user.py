@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
-    role = db.Column(db.String(50), nullable=False, default="student")  # 追加: 役割（student, teacher, Guardianなど）
+    role = db.Column(db.String(50), nullable=False, default="student")  # 追加: 役割（student, educator, Guardianなど）
 
 
     def set_password(self, password):
@@ -64,11 +64,11 @@ class Student(db.Model):
     guardian_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
 
 # 教師テーブル
-class Teacher(db.Model):
-    __tablename__ = 'Teacher'
+class Educator(db.Model):
+    __tablename__ = 'Educator'
     id = db.Column(db.Integer,db.ForeignKey('User.id'), nullable=False, primary_key=True)
     organization_id = db.Column(db.String(100), db.ForeignKey('Organization.organization_id'), nullable=False)
-    department_id = db.Column(db.String(100),db.ForeignKey('Depertment.department_id'), nullable=False)
+    depertment_id = db.Column(db.String(100),db.ForeignKey('Depertment.department_id'), nullable=False)
     hire_date = db.Column(db.Date, nullable=True)  # 追加: 勤務開始日
     permissions = db.Column(db.String(50), nullable=False, default="basic")
 
