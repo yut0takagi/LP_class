@@ -53,6 +53,19 @@ def login():
         if user and user.check_password(form.password.data):
             login_user(user)
             flash("ログイン成功！", "success")
+            # ユーザーの役割に応じて対応するテーブルをチェック
+            if user.role == "student":
+                student = Student.query.filter_by(user_id=user.id).first()
+                if not student:
+                    return redirect(url_for("auth.make_account"))
+            elif user.role == "teacher": 
+                teacher = Teacher.query.filter_by(user_id=user.id).first()
+                if not teacher:
+                    return redirect(url_for("auth.make_account"))
+            elif user.role == "guardian":
+                guardian = Guardian.query.filter_by(user_id=user.id).first() 
+                if not guardian:
+                    return redirect(url_for("auth.make_account"))
             return redirect(url_for("dashboard.dashboard"))
         else:
             flash("ログイン失敗。メールアドレスまたはパスワードが間違っています。", "danger")

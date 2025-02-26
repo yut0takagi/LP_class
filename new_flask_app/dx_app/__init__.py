@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
+import pyrebase
+import json
 import os
 from dx_app.models import db, User
 
@@ -11,18 +13,17 @@ csrf = CSRFProtect()
 # DB と LoginManager の初期化（appより前に定義する）
 login_manager = LoginManager()
 
+
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object('dx_app.config')
-
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
     csrf.init_app(app)
-
     # 🔹 未認証ユーザーは 'auth.login' へリダイレクト
     login_manager.login_view = "auth.login"
-    
     # 404 Not found errorについての遷移
     from dx_app.views.misc import page_not_found
     app.register_error_handler(404, page_not_found)
