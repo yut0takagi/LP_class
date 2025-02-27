@@ -38,6 +38,14 @@ class Subject(db.Model):
     depertment_id = db.Column(db.String(100), db.ForeignKey('Depertment.department_id'), nullable=False)
     subject_name = db.Column(db.String(100), nullable=False)
 
+class Grade(db.Model):
+    __tablename__ = 'Grade'
+    grade_id = db.Column(db.Integer, primary_key=True)
+    organization_id = db.Column(db.String(100), db.ForeignKey('Organization.organization_id'), nullable=False)
+    depertment_id = db.Column(db.String(100), db.ForeignKey('Depertment.department_id'), nullable=False)
+    grade_name = db.Column(db.String(100), db.ForeignKey('Subject.subject_id'), nullable=False)
+    priority=db.Column(db.Integer(),nullable=False)
+
 class Booth(db.Model):
     __tablename__ = 'Booth'
     booth_id = db.Column(db.Integer, primary_key=True)

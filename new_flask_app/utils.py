@@ -2,8 +2,8 @@ from datetime import datetime, timedelta
 import sqlite3
 import locale
 from dx_app import db
-from wsgi import app
-from dx_app.models import Organization, Depertment, Period, Attention, Subject, Booth
+from flask import current_app as app
+from dx_app.models import Organization, Depertment, Period, Attention, Subject,Grade, Booth
 from dx_app.models import User, Student, Educator, Guardian
 from dx_app.models import SubjectPossib, ShiftPossib,ShiftSubmission, ShiftComp
 
@@ -13,6 +13,52 @@ from sqlalchemy import and_, or_
 locale.setlocale(locale.LC_TIME, "ja_JP.UTF-8")
 
 
+def add_record_to_table(table, data: dict):
+    """
+    指定されたテーブルにデータを追加する関数
+
+    Args:
+        table: データを追加するテーブルモデル
+        data (dict): 追加するデータの辞書
+
+    Returns:
+        bool: 追加が成功したかどうか
+    """
+    try:
+        record = table(**data)
+        db.session.add(record)
+        db.session.commit()
+        return True
+    except Exception as e:
+        db.session.rollback()
+        print(f"エラーが発生しました: {str(e)}")
+        return False
+    
+def delete_record_from_table(table, id):
+    """
+    指定されたテーブルのレコードを削除する関数
+
+    Args:
+        table: データを削除するテーブルモデル
+        id: 削除するレコードのID
+
+    Returns:
+        bool: 削除が成功したかどうか
+    """
+    try:
+        record = table.query.get(id)
+        if record:
+            db.session.delete(record)
+            db.session.commit()
+            return True
+        else:
+            return False
+    except Exception as e:
+        db.session.rollback()
+        print(f"エラーが発生しました: {str(e)}")
+        return False
+            
+
 
 def make_dict(pagename,
               form=None,
@@ -20,6 +66,7 @@ def make_dict(pagename,
               datedata=False,
               period_data=False,
               shift_possib_data=False,
+              grade_data=False,
               educator_list=False,
               student_list=False,
               organization_id = None,
@@ -68,21 +115,23 @@ def make_dict(pagename,
         dict["shift_possib_data"]=get_data_by_filting(table=ShiftPossib,
                                                filters={"user_id":user_id_list}
                                                )
-    try:
-        dict["data"]=[staff_list,date_list, period_list,weekday_list]
-    except:
-        dict["data"] = "データが取得できませんでした"
+    if grade_data:
+        dict["grade_data"]=get_grade_data(organization_id, depertment_id)
+
     return dict
+
 
 # 日付情報取得
 def get_date_info():
     date_data = [(datetime.today()+timedelta(days=i)).date() for i in range(7)]
     month_list =[int(j) for j in  [i.strftime("%m") for i in date_data]]
     date_list=[int(j) for j in  [i.strftime("%d") for i in date_data]]
+    month_date_list = [f"{month_list[i]}月{date_list[i]}日" for i in range(7)]
     weekday_list = [i.strftime("%a") for i in date_data]
     return {"date_data":date_data,
             "month_list": month_list,
             "date_list": date_list,
+            "month_date_list": month_date_list,
             "weekday_list": weekday_list}
 
 # タイトル取得
@@ -143,3 +192,17 @@ def get_data_by_filting(table=None, filters=None):
     except Exception as e:
         print(f"Error: {e}")  # デバッグ用
         return {"condit": False, "data": None}
+
+def get_grade_data(organization_id, depertment_id):
+    grade_list=get_data_by_filting(table=Grade,
+                                    filters={"organization_id":organization_id,
+                                            "depertment_id":depertment_id,
+                                            }
+                                    )
+    if len(grade_list)>1:
+        _ = []
+        for i in range(len(grade_list)):
+            _.append(grade_list[j] for j in range(len(grade_list)) if grade_list[j]["priority"] ==i )
+        return _
+    else:
+        return grade_list

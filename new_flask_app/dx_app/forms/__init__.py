@@ -3,3 +3,4 @@ from dx_app.forms.auth import (LoginForm,RegisterForm, RegistrationFormForStuden
                                CramForm, IndividualForm,
                                )
 from dx_app.forms.shift import ShiftSubmissionForm
+from dx_app.forms.dashboard import AgencySearch
