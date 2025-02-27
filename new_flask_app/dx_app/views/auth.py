@@ -21,11 +21,6 @@ bp_auth_settings_students = Blueprint("settings_students", __name__, url_prefix=
 bp_auth_settings_teachers = Blueprint("settings_teachers", __name__, url_prefix="/auth/settings/teachers")
 bp_auth_settings_guardians = Blueprint("settings_guardians", __name__, url_prefix="/auth/settings/guardians")
 
-
-
-
-
-
 # /auth/register
 @bp.route("/register", methods=["GET", "POST"])
 def register():
