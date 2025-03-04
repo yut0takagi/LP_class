@@ -2,6 +2,7 @@ from flask import render_template, Blueprint, session, redirect, url_for
 from flask_login import login_required, current_user
 from utils import make_dict
 from dx_app.models import Student
+from dx_app.forms import AgencySearch
 bp = Blueprint("dashboard", __name__)
 
 
@@ -9,12 +10,20 @@ bp = Blueprint("dashboard", __name__)
 @bp.route("/student")
 @login_required
 def student():
+    form = AgencySearch
     student = Student.query.filter_by(id=current_user.id).first()
     if not student:
         return redirect(url_for("auth.login"))
     user_type = "individual" if student.depertment_id == "0" else "cram"
     if user_type == "cram":
-        return render_template("dashboard/student/cram/dashboard.html", data=make_dict("dashboard"))
+        return render_template("dashboard/student/cram/dashboard.html", data=make_dict(pagename="dashboard",
+                                                                              form= form,
+                                                                              datedata=True,
+                                                                              period_data=True,
+                                                                              grade_data =True,
+                                                                              organization_id=student.organization_id,
+                                                                              depertment_id=student.depertment_id
+                                                                              ))
     elif user_type == "individual":
         return render_template("dashboard/student/individual/dashboard.html", data=make_dict("dashboard"))
     return redirect(url_for("auth.login"))
@@ -23,6 +32,11 @@ def student():
 @bp.route("/educator")
 @login_required
 def educator():
-    return render_template("dashboard/educator/dashboard.html",data=make_dict("dashboard"))
+    form = AgencySearch
+    return render_template("dashboard/educator/dashboard.html",data=make_dict(pagename="dashboard",
+                                                                              form= form,
+                                                                              datedata=True,
+                                                                              period_data=True,
+                                                                              ))
 
 
