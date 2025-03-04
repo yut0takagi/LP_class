@@ -6,6 +6,8 @@ logs/
 # データについて
 instance/
 migrations/
+faiss_index/
+
 
 # macOSの不要ファイル
 .DS_Store
