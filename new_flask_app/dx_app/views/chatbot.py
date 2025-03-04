@@ -1,22 +1,27 @@
 from flask import render_template, request, jsonify, Blueprint
+
 from utils import make_dict
 import openai
 from dotenv import dotenv_values
+import os
 
+API_KEY = os.getenv("OPENAI_API_KEY")
 
 bp = Blueprint("chatbot", __name__)
  
 @bp.route('/chatbot')
 def chat_bot():
+    
     return render_template("chatbot/chatbot.html",data=make_dict("chatbot"))
+
+
+
+
 
 @bp.route("/chat", methods=["POST"])
 def chat():
-    global ENV_PATH
-    env_path = ENV_PATH
-    config = dotenv_values(env_path)
-    # OPENAI_API_KEY を取得
-    openai.api_key = config.get("OPENAI_API_KEY")
+    global API_KEY
+    openai.api_key = API_KEY
     data = request.get_json()
     user_message = data.get("message", "")
     try:

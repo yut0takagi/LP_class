@@ -16,7 +16,6 @@ def register():
     if request.method == "GET":
         form.id.data = str(uuid.uuid4())  # UUID を生成してセット
 
-
     if form.validate_on_submit():  # フォームのバリデーションが成功した場合
         id = form.id.data
         name = form.name.data
