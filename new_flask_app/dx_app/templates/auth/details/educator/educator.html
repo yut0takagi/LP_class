@@ -1,0 +1,40 @@
+{% extends "layoutForLogined.html" %}
+{% block content %}
+
+<h2 class="text-3xl font-bold text-gray-800 mb-6">塾生向け登録フォーム</h2>
+
+<div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+    <form method="POST">
+        {{ data["form"].hidden_tag() }}
+        <!-- 所属ID -->
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">{{ data["form"].organization_id.label }}</label>
+            {{ data["form"].organization_id(class="w-full p-2 border rounded") }}
+        </div>
+
+        <!-- 教室ID -->
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">{{ data["form"].depertment_id.label }}</label>
+            {{ data["form"].depertment_id(class="w-full p-2 border rounded") }}
+        </div>
+
+        <!-- 勤務開始日 -->
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">{{ data["form"].hire_date.label }}</label>
+            {{ data["form"].hire_date(class="w-full p-2 border rounded") }}
+        </div>
+
+        <!-- 権限 -->
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">{{ data["form"].permissions.label }}</label>
+            {{ data["form"].permissions(class="w-full p-2 border rounded") }}
+        </div>
+
+        <!-- 登録ボタン -->
+        <div class="mb-4 text-center">
+            {{ data["form"].submit(class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700") }}
+        </div>
+    </form>
+</div>
+
+{% endblock %}

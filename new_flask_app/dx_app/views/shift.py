@@ -3,8 +3,7 @@ from flask_login import login_required, current_user
 import datetime
 from utils import make_dict
 from dx_app import db
-from dx_app.models.shift import ShiftPossib
-from dx_app.models.shift import ShiftPeriod
+from dx_app.models import ShiftPossib,ShiftSubmission
 
 
 
