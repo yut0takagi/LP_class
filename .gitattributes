@@ -1,0 +1,1 @@
+new_flask_app/faiss_index/index.faiss filter=lfs diff=lfs merge=lfs -text

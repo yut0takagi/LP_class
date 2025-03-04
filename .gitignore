@@ -7,6 +7,7 @@ logs/
 instance/
 migrations/
 
+
 # macOSの不要ファイル
 .DS_Store
 

@@ -15,13 +15,23 @@ tqdm = "==4.66.5"
 flask-migrate = "*"
 flask-login = "*"
 flask-wtf = "*"
-openai = "*"
 python-dotenv = "*"
 email-validator = "*"
 flask-sqlalchemy = "*"
+<<<<<<< HEAD
+langchain = "*"
+langchain-community = "*"
+openai = "*"
+faiss-cpu = "*"
+tiktoken = "*"
+pypdf = "*"
+python-pptx = "*"
+=======
 pyrebase = "*"
 urllib3 = "*"
 requests = "*"
 pyrebase4 = "*"
+>>>>>>> origin/main
 
 [dev-packages]
+ipykernel = "*"
